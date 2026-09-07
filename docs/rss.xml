@@ -7,6 +7,13 @@
     <language>en-us</language>
     <lastBuildDate>Mon, 07 Sep 2026 12:00:00 GMT</lastBuildDate>
     <item>
+      <title>Git Is a Time Machine, Not a Backup Button</title>
+      <link>https://drvicki.github.io/dr-vickis-tech-talk/post/git-is-a-time-machine-not-a-backup-button/</link>
+      <description>Senior developers move faster because they understand Git as a timeline—and know how to recover when the timeline bends.</description>
+      <pubDate>Mon, 07 Sep 2026 13:00:00 GMT</pubDate>
+      <guid>https://drvicki.github.io/dr-vickis-tech-talk/post/git-is-a-time-machine-not-a-backup-button/</guid>
+    </item>
+    <item>
       <title>Stop Using the Terminal Like a Vending Machine: 11 Workflow Hacks for Developers</title>
       <link>https://drvicki.github.io/dr-vickis-tech-talk/post/terminal-workflow-hacks-for-developers/</link>
       <description>The terminal isn’t just a utility for running scripts—it is your primary development environment.</description>

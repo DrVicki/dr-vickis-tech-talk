@@ -36,6 +36,168 @@ export const siteAssets = {
 
 export const articles: Article[] = [
   {
+    slug: "git-is-a-time-machine-not-a-backup-button",
+    title: "Git Is a Time Machine, Not a Backup Button",
+    excerpt:
+      "Senior developers move faster because they understand Git as a timeline—and know how to recover when the timeline bends.",
+    category: "Future of Work",
+    date: "September 7, 2026",
+    readTime: "7 min read",
+    image: assetUrl("git-time-machine.jpg", "/manus-storage/git-time-machine_4adcdec7.jpg"),
+    imageAlt: "Editorial illustration of a hand guiding branching project history through a time machine",
+    accent: "blue",
+    dek: "A practical guide to inspecting changes, building clean commits, navigating history, and recovering lost work without panic.",
+    quote: "Confidence with Git comes from knowing that mistakes are usually navigable, visible, and recoverable.",
+    sections: [
+      {
+        heading: "From backup service to project timeline",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "For years, my entire Git workflow consisted of three basic commands:",
+          },
+          { type: "code", language: "Bash", code: "git add .\ngit commit -m \"update\"\ngit push" },
+          {
+            type: "paragraph",
+            text: "I treated Git as a backup service: make changes, commit, and push. That changed when I watched a senior developer recover deleted commits, clean up six months of messy history, and repair a broken merge without panicking or searching the web.",
+          },
+          {
+            type: "paragraph",
+            text: "The takeaway was not that senior developers memorize more commands. They understand Git as a timeline of a project’s entire history. Once that model clicks, mistakes stop feeling final and start feeling like states you can inspect, navigate, and repair.",
+          },
+        ],
+      },
+      {
+        heading: "Always inspect before you commit",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Run `git status` constantly—before committing, switching branches, or rebasing. It reveals what is staged, what is modified, and what Git is not tracking. That quick pause prevents accidental commits of secrets, debug logs, build artifacts, and temporary files.",
+          },
+          {
+            type: "paragraph",
+            text: "Use `git diff` to inspect exact working-tree changes. Before committing, use `git diff --staged` to review the snapshot you are actually about to record:",
+          },
+          { type: "code", language: "Bash", code: "git status\ngit diff\ngit diff --staged" },
+          {
+            type: "tip",
+            text: "Treat the staged diff as your final editorial review. A clean commit begins with knowing precisely what it contains.",
+          },
+        ],
+      },
+      {
+        heading: "Commit selectively",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Instead of staging everything with `git add .`, use patch mode to review changes hunk by hunk:",
+          },
+          { type: "code", language: "Bash", code: "git add -p" },
+          {
+            type: "paragraph",
+            text: "Interactive staging lets you separate a refactor from a bug fix even when both changes live in the same file. The result is a series of atomic commits that are easier to review, revert, and understand months later.",
+          },
+        ],
+      },
+      {
+        heading: "Debug and navigate history efficiently",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "When you know a bug exists now but did not exist in an earlier release, `git bisect` performs a binary search through history to find the exact commit that introduced it:",
+          },
+          {
+            type: "code",
+            language: "Bash",
+            code: "git bisect start\ngit bisect bad          # Current version has the bug\ngit bisect good v2.3.1  # Last known good release or commit",
+          },
+          {
+            type: "paragraph",
+            text: "Git checks out a midpoint. Test it, mark it good or bad, and repeat until the search isolates the first broken commit. When you finish, run `git bisect reset` to return to your original branch.",
+          },
+          {
+            type: "paragraph",
+            text: "For everyday orientation, visualize the branch structure and merge points in a compact graph:",
+          },
+          { type: "code", language: "Bash", code: "git log --oneline --graph --decorate\n\n# Optional shell alias\nalias gl='git log --oneline --graph --decorate'" },
+        ],
+      },
+      {
+        heading: "Context-switch without tangling your work",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Use `git stash` to place unfinished tracked changes in a temporary vault when an urgent interruption arrives. Restore them later with `git stash pop`:",
+          },
+          { type: "code", language: "Bash", code: "git stash push -m \"WIP: account settings\"\n# Work on the interruption, then return\ngit stash pop" },
+          {
+            type: "paragraph",
+            text: "For longer parallel efforts, `git worktree` is often cleaner than repeatedly stashing and switching. It checks out another branch into a separate directory while your current working tree stays untouched:",
+          },
+          { type: "code", language: "Bash", code: "git worktree add ../hotfix-branch hotfix/login-timeout" },
+          {
+            type: "tip",
+            text: "Use a stash for a short interruption. Use a worktree when two streams of work need to remain active side by side.",
+          },
+        ],
+      },
+      {
+        heading: "Recover lost work and maintain history",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "`git restore <file>` discards uncommitted changes in a file and returns it to its last committed state. Because that working-tree change is destructive, inspect the diff first.",
+          },
+          { type: "code", language: "Bash", code: "git diff -- path/to/file\ngit restore path/to/file" },
+          {
+            type: "paragraph",
+            text: "`git reflog` is the deeper recovery tool. It records local movements of `HEAD`, including commits that appear to vanish after a reset or rebase. Find the lost reference, inspect it, and create a recovery branch before doing anything else:",
+          },
+          { type: "code", language: "Bash", code: "git reflog\ngit show <commit-id>\ngit switch -c recovery/<name> <commit-id>" },
+          {
+            type: "paragraph",
+            text: "Before opening a pull request, `git rebase -i HEAD~N` lets you squash, reorder, or reword local commits. Use it on work you control; rewriting shared history can disrupt collaborators.",
+          },
+          {
+            type: "paragraph",
+            text: "When a line raises a question, `git blame <file>` shows the commit associated with each line. Treat it as a doorway into context: inspect the commit and discussion to learn why the code was introduced—not to assign blame.",
+          },
+        ],
+      },
+      {
+        heading: "Reduce friction with aliases",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Once the underlying commands are familiar, short aliases can keep routine work flowing. Add the versions you actually use to `~/.bashrc` or `~/.zshrc`:",
+          },
+          {
+            type: "code",
+            language: "Bash",
+            code: "alias gs='git status'\nalias ga='git add'\nalias gc='git commit -m'\nalias gp='git push'\nalias gl='git log --oneline --graph --decorate'",
+          },
+          {
+            type: "tip",
+            text: "Aliases should compress familiar actions, not conceal dangerous ones. Keep destructive or history-rewriting operations explicit.",
+          },
+        ],
+      },
+      {
+        heading: "The real shift is confidence",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Mastering Git is not about memorizing complex operations. It is about building confidence through recovery tools. Learning to inspect changes with `git diff`, isolate working states with `git stash`, and retrieve lost work with `git reflog` turns Git from a scary backup system into a reliable time machine.",
+          },
+          {
+            type: "paragraph",
+            text: "Start with the habits that make your work visible: `git status`, `git diff`, and `git add -p`. Then practice recovery in a disposable repository. The goal is not command-line performance. It is the calm that comes from understanding what happened—and knowing you can find your way back.",
+          },
+        ],
+      },
+    ],
+  },
+  {
     slug: "terminal-workflow-hacks-for-developers",
     title: "Stop Using the Terminal Like a Vending Machine: 11 Workflow Hacks for Developers",
     excerpt:

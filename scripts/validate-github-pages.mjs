@@ -10,6 +10,7 @@ const required = [
   ".nojekyll",
   "rss.xml",
   "about/index.html",
+  "post/git-is-a-time-machine-not-a-backup-button/index.html",
   "post/terminal-workflow-hacks-for-developers/index.html",
   "post/ai-agents-from-chat-to-action/index.html",
   "post/personal-data-private-by-design/index.html",
@@ -37,7 +38,7 @@ if (!indexHtml.includes("/dr-vickis-tech-talk/assets/")) errors.push("index.html
 if (!fallbackHtml.includes("/dr-vickis-tech-talk/assets/")) errors.push("404.html is missing the project-aware asset base");
 if (indexHtml.includes("/manus-storage/")) errors.push("index.html still references Manus-only storage");
 if (fallbackHtml.includes("/manus-storage/")) errors.push("404.html still references Manus-only storage");
-if (media.filter((file) => file.endsWith(".jpg")).length !== 5) errors.push("Expected five optimized editorial images");
+if (media.filter((file) => file.endsWith(".jpg")).length !== 6) errors.push("Expected six optimized editorial images");
 if (!guide.includes("DrVicki/dr-vickis-tech-talk")) errors.push("Deployment guide has the wrong repository");
 if (!guide.includes("main") || !guide.includes("/docs")) errors.push("Deployment guide is missing branch-based Pages settings");
 
