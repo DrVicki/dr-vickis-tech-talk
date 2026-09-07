@@ -1,6 +1,13 @@
+export type ArticleBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "code"; code: string; language?: string }
+  | { type: "list"; items: string[] }
+  | { type: "tip"; text: string };
+
 export type ArticleSection = {
   heading: string;
-  paragraphs: string[];
+  paragraphs?: string[];
+  blocks?: ArticleBlock[];
 };
 
 export type Article = {
@@ -14,10 +21,251 @@ export type Article = {
   imageAlt: string;
   accent: string;
   dek: string;
+  quote?: string;
   sections: ArticleSection[];
 };
 
 export const articles: Article[] = [
+  {
+    slug: "terminal-workflow-hacks-for-developers",
+    title: "Stop Using the Terminal Like a Vending Machine: 11 Workflow Hacks for Developers",
+    excerpt:
+      "The terminal isn’t just a utility for running scripts—it is your primary development environment.",
+    category: "Future of Work",
+    date: "September 7, 2026",
+    readTime: "10 min read",
+    image: "/manus-storage/terminal-workflow_26a19738.jpg",
+    imageAlt: "Editorial illustration of a developer navigating a fast terminal workflow across layered command windows",
+    accent: "lime",
+    dek: "Eleven practical habits, shortcuts, and configurations that remove friction from your daily command-line workflow.",
+    quote: "Effortless terminal navigation isn’t about memorizing hundreds of obscure commands. It’s about eliminating repetitive friction points.",
+    sections: [
+      {
+        heading: "Stop retyping previous commands",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "I once watched a senior developer diagnose and fix a critical deployment issue in under 90 seconds. No Googling. No copy-pasting from cheat sheets. Just a smooth, uninterrupted flow through the terminal—as if he were having a conversation with his machine.",
+          },
+          {
+            type: "paragraph",
+            text: "I originally thought he possessed some secret, highly guarded toolset. He didn’t. He simply understood his environment better than I did. Most engineers use the terminal the same way they learned it in their first coding tutorial: type a command, press Enter, and repeat. That works, but it introduces micro-delays that compound into real friction.",
+          },
+          {
+            type: "paragraph",
+            text: "Running a long command only to realize it needs root privileges is a universal experience. Instead of pressing the up arrow and navigating to the start of the line, use `!!` to expand your last command:",
+          },
+          { type: "code", language: "Bash", code: "sudo !!" },
+          {
+            type: "paragraph",
+            text: "Similarly, `!$` retrieves the last argument from your previous command, making chained operations effortless:",
+          },
+          { type: "code", language: "Bash", code: "mkdir my-project\ncd !$" },
+          { type: "tip", text: "`!$` saves you from typing the directory name twice, removing instant overhead." },
+        ],
+      },
+      {
+        heading: "Upgrade to interactive history searching",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "While the up arrow cycles through commands linearly, `Ctrl + R` performs a reverse search through your entire command history. Type any fragment to find its most recent invocation:",
+          },
+          { type: "code", language: "Plaintext", code: "(reverse-i-search)`docker': docker-compose up -d --build" },
+          {
+            type: "paragraph",
+            text: "Press `Ctrl + R` again to cycle backward through older matches, `Enter` to run the command, or `Esc` to edit it.",
+          },
+          {
+            type: "paragraph",
+            text: "To make this feature more useful, retain a substantial history by adding the following configuration to `~/.bashrc` or `~/.zshrc`:",
+          },
+          { type: "code", language: "Bash", code: "HISTSIZE=10000\nHISTFILESIZE=20000\nHISTCONTROL=ignoredups:erasedups" },
+        ],
+      },
+      {
+        heading: "Correct typos on the fly",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "If you execute a command with a typo, you do not need to reload and manually edit the line. Use the `^old^new` substitution pattern:",
+          },
+          { type: "code", language: "Bash", code: "git chekcout main\n^chekcout^checkout" },
+          {
+            type: "paragraph",
+            text: "The shell immediately replaces `chekcout` with `checkout` in the previous command and executes the corrected version.",
+          },
+        ],
+      },
+      {
+        heading: "Build a custom alias library",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Any command or parameter set you type more than five times a week belongs in an alias. Add the shortcuts that fit your work to `~/.bashrc` or `~/.zshrc`:",
+          },
+          {
+            type: "code",
+            language: "Bash",
+            code: "# Navigation\nalias ..='cd ..'\nalias ...='cd ../..'\nalias -- -='cd -'\n\n# File listing\nalias ll='ls -alF'\nalias lt='ls -ltr'\n\n# Safety guards\nalias rm='rm -i'\nalias cp='cp -i'\nalias mv='mv -i'\n\n# Git workflows\nalias gs='git status'\nalias ga='git add .'\nalias gc='git commit -m'\nalias gp='git push'\nalias gl='git log --oneline --graph --decorate'\nalias gco='git checkout'\n\n# Docker management\nalias dps='docker ps'\nalias dc='docker-compose'\nalias dcu='docker-compose up -d'\nalias dcd='docker-compose down'\n\n# Shell reload\nalias reload='source ~/.bashrc'",
+          },
+          {
+            type: "tip",
+            text: "The `alias -- -='cd -'` shortcut acts like a browser back button, switching instantly to your previous working directory. Review interactive safety aliases before using them inside scripts.",
+          },
+        ],
+      },
+      {
+        heading: "Master essential line-editing shortcuts",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Navigating a long command with arrow keys is inefficient. These built-in keyboard shortcuts let you edit at the speed of thought:",
+          },
+          {
+            type: "list",
+            items: [
+              "`Ctrl + A` — Jump to the beginning of the line",
+              "`Ctrl + E` — Jump to the end of the line",
+              "`Ctrl + W` — Delete the word behind the cursor",
+              "`Ctrl + U` — Clear everything before the cursor",
+              "`Ctrl + K` — Clear everything after the cursor",
+              "`Ctrl + L` — Clear the terminal screen",
+              "`Alt + F` — Move forward one word",
+              "`Alt + B` — Move backward one word",
+            ],
+          },
+          {
+            type: "tip",
+            text: "Combine `Ctrl + A` followed by `Ctrl + K` to clear an entire line without holding Backspace.",
+          },
+        ],
+      },
+      {
+        heading: "Preserve remote work sessions with tmux",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "If an SSH connection drops while a long script is running, the process can die with the session. A terminal multiplexer such as `tmux` keeps your session alive on the server regardless of your connection status.",
+          },
+          {
+            type: "code",
+            language: "Bash",
+            code: "# Start a named session\ntmux new -s myproject\n\n# Detach: press Ctrl + B, then D\n\n# Reattach later\ntmux attach -t myproject",
+          },
+          {
+            type: "list",
+            items: [
+              "`Ctrl + B`, then `%` — Split the active pane vertically",
+              "`Ctrl + B`, then `\"` — Split the active pane horizontally",
+              "`Ctrl + B`, then an arrow key — Switch the active pane",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Manage background and foreground tasks",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Keep your terminal tab free while longer processes—such as tests or builds—run by appending `&` to the command:",
+          },
+          { type: "code", language: "Bash", code: "npm run build &" },
+          {
+            type: "list",
+            items: [
+              "Press `Ctrl + Z` to suspend an active foreground process.",
+              "Run `bg` to resume it in the background.",
+              "Run `fg` to bring it back to the foreground.",
+              "Run `jobs` to see active background tasks in the current shell.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Automate repetitive multi-command tasks",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Unlike aliases, shell functions can accept arguments and combine several steps. This function changes directory and immediately lists its contents:",
+          },
+          { type: "code", language: "Bash", code: "function cl() {\n  cd \"$1\" && ls -la\n}" },
+          {
+            type: "paragraph",
+            text: "Running `cl project-folder` now switches into the directory and displays its contents in a single step.",
+          },
+        ],
+      },
+      {
+        heading: "Implement interactive fuzzy searching with fzf",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "If you adopt only one new CLI tool today, make it `fzf`, the command-line fuzzy finder. It transforms flat searches into interactive, real-time filtering lists.",
+          },
+          { type: "code", language: "Bash", code: "# macOS\nbrew install fzf\n\n# Ubuntu / Debian\nsudo apt install fzf" },
+          {
+            type: "paragraph",
+            text: "Once installed, `Ctrl + R` becomes a real-time interactive history finder. You can also pipe other workflows through `fzf`:",
+          },
+          {
+            type: "code",
+            language: "Bash",
+            code: "# Interactive file selection and editing\nvim $(fzf)\n\n# Interactive Git branch switching\ngit checkout $(git branch | fzf)\n\n# Interactively search and select a process ID\nps aux | fzf",
+          },
+          {
+            type: "tip",
+            text: "Inspect a selected process before killing it. Fast workflows should reduce friction without removing deliberate safety checks.",
+          },
+        ],
+      },
+      {
+        heading: "Pipe output directly to the system clipboard",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Stop manually highlighting terminal output to copy it. Pipe the result directly to the system clipboard for complete, repeatable precision:",
+          },
+          {
+            type: "code",
+            language: "Bash",
+            code: "# macOS\ncat ~/.ssh/id_rsa.pub | pbcopy\n\n# Linux with xclip installed\ncat ~/.ssh/id_rsa.pub | xclip -selection clipboard",
+          },
+          {
+            type: "tip",
+            text: "Be deliberate with secrets. Clipboard managers and other applications may retain copied API tokens or private values.",
+          },
+        ],
+      },
+      {
+        heading: "Auto-correct terminal commands with thefuck",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "When you mistype a complex command, the open-source tool `thefuck` can evaluate the previous failure, suggest corrected syntax, and ask you to approve the change.",
+          },
+          { type: "code", language: "Bash", code: "sudo apt install thefuck\n\n# After a failed command\nfuck" },
+          {
+            type: "paragraph",
+            text: "Because the tool generates a command for execution, read the proposed correction before accepting it—especially when elevated permissions or destructive operations are involved.",
+          },
+        ],
+      },
+      {
+        heading: "Start small and let the gains compound",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Effortless terminal navigation is not about memorizing hundreds of obscure commands. It is about eliminating repetitive friction points.",
+          },
+          {
+            type: "paragraph",
+            text: "Pick one or two habits—perhaps `Ctrl + R` for history search, faster line navigation, or a few personal aliases—and fold them into your daily workflow. Over time, these small optimizations compound into a faster, smoother, and more intuitive development experience.",
+          },
+        ],
+      },
+    ],
+  },
   {
     slug: "ai-agents-from-chat-to-action",
     title: "AI agents are moving from chat to action. Here’s what changes.",

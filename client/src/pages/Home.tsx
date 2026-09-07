@@ -83,7 +83,7 @@ export default function Home() {
               <p className="eyebrow">Featured field note</p>
               <h2 className="mt-4 max-w-2xl font-display text-4xl font-medium leading-[0.98] tracking-[-0.035em] sm:text-6xl">A clearer view of what’s changing.</h2>
             </div>
-            <span className="hidden text-xs font-semibold text-[#627086] md:block">SEPTEMBER 06 — 7 MIN</span>
+            <span className="hidden text-xs font-semibold uppercase text-[#627086] md:block">{articles[0].date} — {articles[0].readTime}</span>
           </div>
           <Link href={`/post/${articles[0].slug}`} className="feature-card group grid overflow-hidden rounded-[30px] bg-[#071a2e] text-[#f8f3e8] lg:grid-cols-[1.1fr_.9fr]">
             <div className="relative min-h-[360px] overflow-hidden sm:min-h-[520px]">

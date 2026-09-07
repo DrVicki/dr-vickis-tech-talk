@@ -137,6 +137,12 @@
   .article-body h2 { margin-top: .4rem; font-family: "Instrument Serif", Georgia, serif; font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1; letter-spacing: -.035em; font-weight: 600; }
   .article-body section p { margin-top: 1.35rem; font-size: 1.06rem; line-height: 1.9; color: #445267; }
   .section-number { font-family: "Instrument Serif", Georgia, serif; font-size: 1.35rem; font-style: italic; color: #ff6048; }
+  .article-list { margin-top: 1.5rem; display: grid; gap: .7rem; }
+  .article-list li { position: relative; padding-left: 1.65rem; font-size: 1rem; line-height: 1.75; color: #445267; }
+  .article-list li::before { content: ""; position: absolute; left: 0; top: .68rem; width: .55rem; height: .55rem; border-radius: 999px; background: #c7dd2b; box-shadow: 0 0 0 3px rgba(7,26,46,.08); }
+  .article-tip { margin-top: 1.75rem; border-left: 4px solid #ff6048; border-radius: 0 18px 18px 0; background: #ede8de; padding: 1.25rem 1.4rem; }
+  .article-tip .article-tip-label { display: block; font-size: .625rem; font-weight: 800; text-transform: uppercase; letter-spacing: .2em; color: #ff6048; }
+  .article-tip p { margin-top: .55rem; font-size: .95rem; line-height: 1.65; color: #34445a; }
 
   @media (min-width: 640px) { .container { padding-left: 1.5rem; padding-right: 1.5rem; } }
   @media (min-width: 1024px) { .container { padding-left: 2rem; padding-right: 2rem; max-width: 1320px; } }

@@ -5,7 +5,14 @@
     <link>/</link>
     <description>Clear thinking for a changing world—without the hype fog.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 06 Sep 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 07 Sep 2026 12:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Stop Using the Terminal Like a Vending Machine: 11 Workflow Hacks for Developers</title>
+      <link>/post/terminal-workflow-hacks-for-developers</link>
+      <description>The terminal isn’t just a utility for running scripts—it is your primary development environment.</description>
+      <pubDate>Mon, 07 Sep 2026 12:00:00 GMT</pubDate>
+      <guid>/post/terminal-workflow-hacks-for-developers</guid>
+    </item>
     <item>
       <title>AI agents are moving from chat to action. Here’s what changes.</title>
       <link>/post/ai-agents-from-chat-to-action</link>

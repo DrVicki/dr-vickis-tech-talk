@@ -1,9 +1,63 @@
-import { useEffect } from "react";
-import { ArrowLeft, ArrowUpRight, Clock, Quote, Share2 } from "lucide-react";
+import { useEffect, useState, type ReactNode } from "react";
+import { ArrowLeft, ArrowUpRight, Check, Clock, Copy, Quote, Share2, Terminal } from "lucide-react";
 import { Link } from "wouter";
-import { articles } from "@/lib/content";
+import { articles, type ArticleBlock } from "@/lib/content";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+
+function formatInline(text: string): ReactNode[] {
+  return text.split(/(`[^`]+`)/g).map((part, index) => {
+    if (part.startsWith("`") && part.endsWith("`")) {
+      return <code key={`${part}-${index}`} className="rounded-md bg-[#071a2e]/7 px-1.5 py-0.5 font-mono text-[.9em] font-semibold text-[#173d68]">{part.slice(1, -1)}</code>;
+    }
+    return part;
+  });
+}
+
+function CodeBlock({ code, language = "Code" }: { code: string; language?: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const copyCode = async () => {
+    await navigator.clipboard.writeText(code);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1800);
+  };
+
+  return (
+    <div className="my-7 overflow-hidden rounded-[20px] bg-[#06162b] shadow-[0_20px_50px_rgba(7,26,46,.13)]">
+      <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 text-[#8fa2b7] sm:px-5">
+        <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em]"><Terminal className="h-3.5 w-3.5 text-[#c7dd2b]" /> {language}</span>
+        <button type="button" onClick={copyCode} className="flex items-center gap-2 rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] transition hover:bg-white/10 hover:text-white" aria-label={`Copy ${language} code`}>
+          {copied ? <Check className="h-3.5 w-3.5 text-[#c7dd2b]" /> : <Copy className="h-3.5 w-3.5" />}
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </div>
+      <pre className="overflow-x-auto p-5 text-[13px] leading-7 text-[#e2eaf2] sm:p-6 sm:text-sm"><code>{code}</code></pre>
+    </div>
+  );
+}
+
+function ArticleContentBlock({ block }: { block: ArticleBlock }) {
+  if (block.type === "paragraph") {
+    return <p>{formatInline(block.text)}</p>;
+  }
+  if (block.type === "code") {
+    return <CodeBlock code={block.code} language={block.language} />;
+  }
+  if (block.type === "list") {
+    return (
+      <ul className="article-list">
+        {block.items.map((item) => <li key={item}>{formatInline(item)}</li>)}
+      </ul>
+    );
+  }
+  return (
+    <div className="article-tip">
+      <span className="article-tip-label">Dr. Vicki’s note</span>
+      <p>{formatInline(block.text)}</p>
+    </div>
+  );
+}
 
 export default function ArticlePage({ params }: { params: { slug: string } }) {
   const article = articles.find((item) => item.slug === params.slug);
@@ -64,7 +118,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
         <article className="container grid gap-10 pb-24 pt-10 lg:grid-cols-[180px_minmax(0,700px)_180px] lg:justify-center lg:pt-16">
           <aside className="hidden lg:block">
-            <div className="sticky top-28">
+            <div className="sticky top-28 max-h-[calc(100vh-9rem)] overflow-y-auto pr-3">
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#7b8796]">In this note</p>
               <ol className="mt-5 space-y-4 border-l border-[#132841]/15 pl-4 text-xs font-semibold leading-5 text-[#627086]">
                 {article.sections.map((section, index) => <li key={section.heading}><a href={`#section-${index + 1}`} className="transition hover:text-[#315f95]">{section.heading}</a></li>)}
@@ -76,13 +130,14 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             <p className="lead-copy">{article.excerpt}</p>
             <div className="my-10 flex gap-4 border-y border-[#132841]/12 py-7 sm:my-14">
               <Quote className="mt-1 h-6 w-6 shrink-0 text-[#ff6048]" />
-              <p className="font-display text-2xl font-medium italic leading-8">“Technology earns trust when the boundaries are as visible as the possibilities.”</p>
+              <p className="font-display text-2xl font-medium italic leading-8">“{article.quote ?? "Technology earns trust when the boundaries are as visible as the possibilities."}”</p>
             </div>
             {article.sections.map((section, index) => (
               <section key={section.heading} id={`section-${index + 1}`} className="scroll-mt-28">
-                <span className="section-number">0{index + 1}</span>
+                <span className="section-number">{String(index + 1).padStart(2, "0")}</span>
                 <h2>{section.heading}</h2>
-                {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                {section.blocks?.map((block, blockIndex) => <ArticleContentBlock key={`${section.heading}-${blockIndex}`} block={block} />)}
+                {section.paragraphs?.map((paragraph) => <p key={paragraph}>{formatInline(paragraph)}</p>)}
               </section>
             ))}
           </div>
