@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>Dr. Vicki's Tech Talk</title>
+    <link>/</link>
+    <description>Clear thinking for a changing world—without the hype fog.</description>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 06 Sep 2026 12:00:00 GMT</lastBuildDate>
+    <item>
+      <title>AI agents are moving from chat to action. Here’s what changes.</title>
+      <link>/post/ai-agents-from-chat-to-action</link>
+      <description>The useful question is no longer only what an AI can say—it’s what we should allow it to do.</description>
+      <pubDate>Sun, 06 Sep 2026 12:00:00 GMT</pubDate>
+      <guid>/post/ai-agents-from-chat-to-action</guid>
+    </item>
+    <item>
+      <title>Your personal data deserves a private-by-design future</title>
+      <link>/post/personal-data-private-by-design</link>
+      <description>Privacy cannot remain a settings page we visit after something goes wrong.</description>
+      <pubDate>Wed, 02 Sep 2026 12:00:00 GMT</pubDate>
+      <guid>/post/personal-data-private-by-design</guid>
+    </item>
+    <item>
+      <title>Spatial computing is bigger than the headset</title>
+      <link>/post/spatial-computing-beyond-headsets</link>
+      <description>The more interesting future begins when digital information understands the room around us.</description>
+      <pubDate>Fri, 28 Aug 2026 12:00:00 GMT</pubDate>
+      <guid>/post/spatial-computing-beyond-headsets</guid>
+    </item>
+  </channel>
+</rss>
