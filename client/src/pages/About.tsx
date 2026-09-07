@@ -64,7 +64,7 @@ export default function About() {
         <section className="container py-20 text-center sm:py-28">
           <p className="eyebrow">Start with a field note</p>
           <h2 className="mx-auto mt-5 max-w-3xl font-display text-5xl font-medium leading-[0.94] tracking-[-0.04em] sm:text-7xl">The future is easier to meet when we can name what’s changing.</h2>
-          <Link href="/#latest" className="mt-9 inline-flex items-center gap-3 rounded-full bg-[#071a2e] px-7 py-4 text-sm font-bold text-white transition hover:-translate-y-1">Explore the notebook <ArrowUpRight className="h-4 w-4" /></Link>
+          <a href={`${import.meta.env.BASE_URL}#latest`} className="mt-9 inline-flex items-center gap-3 rounded-full bg-[#071a2e] px-7 py-4 text-sm font-bold text-white transition hover:-translate-y-1">Explore the notebook <ArrowUpRight className="h-4 w-4" /></a>
         </section>
       </main>
       <SiteFooter />

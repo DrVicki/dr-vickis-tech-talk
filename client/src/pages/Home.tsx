@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, Clock, Layers3, Radar, ShieldCheck, Sparkles } from "lucide-react";
 import { Link } from "wouter";
-import { articles, topics } from "@/lib/content";
+import { articles, siteAssets, topics } from "@/lib/content";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -34,7 +34,7 @@ export default function Home() {
       <main>
         <section className="relative isolate min-h-[700px] overflow-hidden bg-[#06162b] text-[#f8f3e8] sm:min-h-[740px]">
           <img
-            src="/manus-storage/hero-editorial_106889d6.jpg"
+            src={siteAssets.hero}
             alt="Abstract editorial collage showing the human side of emerging technology"
             className="absolute inset-0 h-full w-full object-cover object-[67%_center]"
           />

@@ -2,6 +2,8 @@ import { ArrowUpRight, Rss } from "lucide-react";
 import { Link } from "wouter";
 
 export default function SiteFooter() {
+  const sectionHref = (section: string) => `${import.meta.env.BASE_URL}#${section}`;
+
   return (
     <footer className="bg-[#06162b] text-[#f8f3e8]">
       <div className="container py-12 sm:py-16">
@@ -18,16 +20,16 @@ export default function SiteFooter() {
           <div>
             <p className="footer-label">Explore</p>
             <div className="mt-4 flex flex-col gap-3 text-sm text-[#dce3ea]">
-              <a href="/#latest" className="footer-link">Latest notes</a>
-              <a href="/#topics" className="footer-link">Browse topics</a>
+              <a href={sectionHref("latest")} className="footer-link">Latest notes</a>
+              <a href={sectionHref("topics")} className="footer-link">Browse topics</a>
               <Link href="/about" className="footer-link">About Dr. Vicki</Link>
             </div>
           </div>
           <div>
             <p className="footer-label">Stay curious</p>
             <div className="mt-4 flex flex-col gap-3 text-sm text-[#dce3ea]">
-              <a href="/#newsletter" className="footer-link flex items-center gap-2">Join the weekly brief <ArrowUpRight className="h-3.5 w-3.5" /></a>
-              <a href="/rss.xml" className="footer-link flex items-center gap-2"><Rss className="h-3.5 w-3.5" /> RSS feed</a>
+              <a href={sectionHref("newsletter")} className="footer-link flex items-center gap-2">Join the weekly brief <ArrowUpRight className="h-3.5 w-3.5" /></a>
+              <a href={`${import.meta.env.BASE_URL}rss.xml`} className="footer-link flex items-center gap-2"><Rss className="h-3.5 w-3.5" /> RSS feed</a>
             </div>
           </div>
         </div>

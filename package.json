@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "pages:build": "GITHUB_PAGES=true VITE_USE_LOCAL_ASSETS=true vite build --outDir ../docs --emptyOutDir && node scripts/finalize-pages.mjs",
+    "pages:check": "node scripts/validate-github-pages.mjs",
     "start": "NODE_ENV=production node dist/index.js",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",

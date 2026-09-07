@@ -25,6 +25,15 @@ export type Article = {
   sections: ArticleSection[];
 };
 
+const assetUrl = (fileName: string, manusPath: string) =>
+  import.meta.env.VITE_USE_LOCAL_ASSETS === "true"
+    ? `${import.meta.env.BASE_URL}assets/media/${fileName}`
+    : manusPath;
+
+export const siteAssets = {
+  hero: assetUrl("hero-editorial.jpg", "/manus-storage/hero-editorial_106889d6.jpg"),
+};
+
 export const articles: Article[] = [
   {
     slug: "terminal-workflow-hacks-for-developers",
@@ -34,7 +43,7 @@ export const articles: Article[] = [
     category: "Future of Work",
     date: "September 7, 2026",
     readTime: "10 min read",
-    image: "/manus-storage/terminal-workflow_26a19738.jpg",
+    image: assetUrl("terminal-workflow.jpg", "/manus-storage/terminal-workflow_26a19738.jpg"),
     imageAlt: "Editorial illustration of a developer navigating a fast terminal workflow across layered command windows",
     accent: "lime",
     dek: "Eleven practical habits, shortcuts, and configurations that remove friction from your daily command-line workflow.",
@@ -274,7 +283,7 @@ export const articles: Article[] = [
     category: "AI",
     date: "September 6, 2026",
     readTime: "7 min read",
-    image: "/manus-storage/ai-agents_39842fb7.jpg",
+    image: assetUrl("ai-agents.jpg", "/manus-storage/ai-agents_39842fb7.jpg"),
     imageAlt: "Editorial illustration of small AI agents coordinating a workflow with a human decision-maker",
     accent: "coral",
     dek: "A practical field guide to the new layer between a prompt and a finished task—and the human judgment it still needs.",
@@ -310,7 +319,7 @@ export const articles: Article[] = [
     category: "Digital Life",
     date: "September 2, 2026",
     readTime: "6 min read",
-    image: "/manus-storage/privacy_7f496d62.jpg",
+    image: assetUrl("privacy.jpg", "/manus-storage/privacy_7f496d62.jpg"),
     imageAlt: "Editorial illustration of a sculptural privacy shield surrounded by encrypted data fragments",
     accent: "blue",
     dek: "The next generation of digital products should make the protective choice the easiest choice—not the expert choice.",
@@ -345,7 +354,7 @@ export const articles: Article[] = [
     category: "Emerging Tech",
     date: "August 28, 2026",
     readTime: "5 min read",
-    image: "/manus-storage/spatial-computing_af406f8d.jpg",
+    image: assetUrl("spatial-computing.jpg", "/manus-storage/spatial-computing_af406f8d.jpg"),
     imageAlt: "Editorial illustration of a hand arranging spatial interfaces around a globe in a room",
     accent: "lime",
     dek: "Look past the hardware cycle and a more consequential idea comes into focus: computing that is anchored to place.",
@@ -380,7 +389,7 @@ export const articles: Article[] = [
     category: "Future of Work",
     date: "August 22, 2026",
     readTime: "8 min read",
-    image: "/manus-storage/hero-editorial_106889d6.jpg",
+    image: assetUrl("hero-editorial.jpg", "/manus-storage/hero-editorial_106889d6.jpg"),
     imageAlt: "Editorial collage of a human profile, microchip, hand, and network pathways",
     accent: "navy",
     dek: "A useful AI strategy starts with the work, the people, and the consequences—not the feature list.",
@@ -414,7 +423,7 @@ export const articles: Article[] = [
     category: "Emerging Tech",
     date: "August 15, 2026",
     readTime: "4 min read",
-    image: "/manus-storage/spatial-computing_af406f8d.jpg",
+    image: assetUrl("spatial-computing.jpg", "/manus-storage/spatial-computing_af406f8d.jpg"),
     imageAlt: "Editorial scene of dimensional technology layers arranged in a physical space",
     accent: "coral",
     dek: "A durable shift usually looks less like a launch event and more like a habit quietly taking root.",
@@ -447,7 +456,7 @@ export const articles: Article[] = [
     category: "Digital Life",
     date: "August 8, 2026",
     readTime: "6 min read",
-    image: "/manus-storage/privacy_7f496d62.jpg",
+    image: assetUrl("privacy.jpg", "/manus-storage/privacy_7f496d62.jpg"),
     imageAlt: "Abstract editorial technology illustration with data fragments and a central frame",
     accent: "blue",
     dek: "Search is changing from a map of sources into a synthesized response. That makes source literacy more important, not less.",

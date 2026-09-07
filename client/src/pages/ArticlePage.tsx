@@ -115,7 +115,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       <main>
         <header className="border-b border-[#132841]/12 bg-[#fffaf1]">
           <div className="container py-14 sm:py-20">
-            <Link href="/#latest" className="mb-12 inline-flex items-center gap-2 text-xs font-bold text-[#536073] transition hover:text-[#315f95]"><ArrowLeft className="h-4 w-4" /> Back to the notebook</Link>
+            <a href={`${import.meta.env.BASE_URL}#latest`} className="mb-12 inline-flex items-center gap-2 text-xs font-bold text-[#536073] transition hover:text-[#315f95]"><ArrowLeft className="h-4 w-4" /> Back to the notebook</a>
             <div className="mx-auto max-w-5xl text-center">
               <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#ff6048]">{article.category}</p>
               <h1 className="mt-6 font-display text-[clamp(3.2rem,7vw,6.8rem)] font-medium leading-[0.9] tracking-[-0.05em]">{article.title}</h1>
@@ -169,7 +169,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           <div className="container py-20">
             <div className="mb-8 flex items-end justify-between">
               <div><p className="eyebrow">Keep reading</p><h2 className="mt-3 font-display text-4xl sm:text-5xl">Follow the thread.</h2></div>
-              <Link href="/#latest" className="hidden items-center gap-2 text-xs font-bold sm:flex">All notes <ArrowUpRight className="h-4 w-4" /></Link>
+              <a href={`${import.meta.env.BASE_URL}#latest`} className="hidden items-center gap-2 text-xs font-bold sm:flex">All notes <ArrowUpRight className="h-4 w-4" /></a>
             </div>
             <div className="grid gap-7 md:grid-cols-2">
               {related.map((item) => (

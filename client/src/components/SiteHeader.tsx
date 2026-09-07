@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { articles } from "@/lib/content";
 
 export default function SiteHeader() {
+  const sectionHref = (section: string) => `${import.meta.env.BASE_URL}#${section}`;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -51,8 +52,8 @@ export default function SiteHeader() {
 
           <nav className="hidden items-center gap-8 text-[13px] font-semibold lg:flex" aria-label="Primary navigation">
             <Link href="/" className="nav-link">Home</Link>
-            <a href="/#latest" className="nav-link">Latest</a>
-            <a href="/#topics" className="nav-link">Topics</a>
+            <a href={sectionHref("latest")} className="nav-link">Latest</a>
+            <a href={sectionHref("topics")} className="nav-link">Topics</a>
             <Link href="/about" className="nav-link">About</Link>
           </nav>
 
@@ -66,7 +67,7 @@ export default function SiteHeader() {
               <Search className="h-4 w-4" />
               <span className="hidden sm:inline">Search</span>
             </button>
-            <a href="/#newsletter" className="hidden h-10 items-center gap-2 rounded-full bg-[#071a2e] px-5 text-xs font-bold text-[#f8f3e8] transition hover:-translate-y-0.5 hover:bg-[#173d68] sm:flex">
+            <a href={sectionHref("newsletter")} className="hidden h-10 items-center gap-2 rounded-full bg-[#071a2e] px-5 text-xs font-bold text-[#f8f3e8] transition hover:-translate-y-0.5 hover:bg-[#173d68] sm:flex">
               Get the brief <ArrowUpRight className="h-3.5 w-3.5" />
             </a>
             <button
@@ -85,8 +86,8 @@ export default function SiteHeader() {
           <nav className="border-t border-[#132841]/10 bg-[#f8f3e8] px-5 py-5 lg:hidden" aria-label="Mobile navigation">
             <div className="flex flex-col gap-1">
               <Link href="/" onClick={closeMenus} className="mobile-nav-link">Home</Link>
-              <a href="/#latest" onClick={closeMenus} className="mobile-nav-link">Latest</a>
-              <a href="/#topics" onClick={closeMenus} className="mobile-nav-link">Topics</a>
+              <a href={sectionHref("latest")} onClick={closeMenus} className="mobile-nav-link">Latest</a>
+              <a href={sectionHref("topics")} onClick={closeMenus} className="mobile-nav-link">Topics</a>
               <Link href="/about" onClick={closeMenus} className="mobile-nav-link">About Dr. Vicki</Link>
             </div>
           </nav>
