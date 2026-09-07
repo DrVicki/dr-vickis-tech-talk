@@ -143,6 +143,40 @@
   .article-tip { margin-top: 1.75rem; border-left: 4px solid #ff6048; border-radius: 0 18px 18px 0; background: #ede8de; padding: 1.25rem 1.4rem; }
   .article-tip .article-tip-label { display: block; font-size: .625rem; font-weight: 800; text-transform: uppercase; letter-spacing: .2em; color: #ff6048; }
   .article-tip p { margin-top: .55rem; font-size: .95rem; line-height: 1.65; color: #34445a; }
+  .syntax-code { tab-size: 2; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+  .syntax-code .token.comment,
+  .syntax-code .token.prolog,
+  .syntax-code .token.doctype,
+  .syntax-code .token.cdata { color: #71869d; font-style: italic; }
+  .syntax-code .token.punctuation { color: #a8b8c8; }
+  .syntax-code .token.property,
+  .syntax-code .token.tag,
+  .syntax-code .token.boolean,
+  .syntax-code .token.number,
+  .syntax-code .token.constant,
+  .syntax-code .token.symbol { color: #ff765f; }
+  .syntax-code .token.selector,
+  .syntax-code .token.attr-name,
+  .syntax-code .token.string,
+  .syntax-code .token.char,
+  .syntax-code .token.builtin,
+  .syntax-code .token.inserted { color: #c7dd2b; }
+  .syntax-code .token.operator,
+  .syntax-code .token.entity,
+  .syntax-code .token.url,
+  .syntax-code .language-css .token.string,
+  .syntax-code .style .token.string { color: #76b7ff; }
+  .syntax-code .token.atrule,
+  .syntax-code .token.attr-value,
+  .syntax-code .token.keyword { color: #ff9f8f; }
+  .syntax-code .token.function,
+  .syntax-code .token.class-name { color: #ffd166; }
+  .syntax-code .token.regex,
+  .syntax-code .token.important,
+  .syntax-code .token.variable { color: #8dd8d0; }
+  .syntax-code .token.deleted { color: #ff6048; }
+  .syntax-code .token.important,
+  .syntax-code .token.bold { font-weight: 700; }
 
   @media (min-width: 640px) { .container { padding-left: 1.5rem; padding-right: 1.5rem; } }
   @media (min-width: 1024px) { .container { padding-left: 2rem; padding-right: 2rem; max-width: 1320px; } }

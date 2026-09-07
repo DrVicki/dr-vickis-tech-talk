@@ -1,6 +1,8 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowUpRight, Check, Clock, Copy, Quote, Share2, Terminal } from "lucide-react";
 import { Link } from "wouter";
+import Prism from "prismjs";
+import "prismjs/components/prism-bash";
 import { articles, type ArticleBlock } from "@/lib/content";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -16,6 +18,19 @@ function formatInline(text: string): ReactNode[] {
 
 function CodeBlock({ code, language = "Code" }: { code: string; language?: string }) {
   const [copied, setCopied] = useState(false);
+  const highlightedCode = useMemo(() => {
+    const languageKey = language.toLowerCase();
+    const isShell = ["bash", "shell", "sh", "zsh"].includes(languageKey);
+
+    if (isShell) {
+      return Prism.highlight(code, Prism.languages.bash, "bash");
+    }
+
+    return code
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;");
+  }, [code, language]);
 
   const copyCode = async () => {
     await navigator.clipboard.writeText(code);
@@ -32,7 +47,7 @@ function CodeBlock({ code, language = "Code" }: { code: string; language?: strin
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
-      <pre className="overflow-x-auto p-5 text-[13px] leading-7 text-[#e2eaf2] sm:p-6 sm:text-sm"><code>{code}</code></pre>
+      <pre className="syntax-code overflow-x-auto p-5 text-[13px] leading-7 text-[#e2eaf2] sm:p-6 sm:text-sm"><code dangerouslySetInnerHTML={{ __html: highlightedCode }} /></pre>
     </div>
   );
 }
