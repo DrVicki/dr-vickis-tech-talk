@@ -35,7 +35,9 @@ function Router() {
       <ScrollManager />
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/about/" component={About} />
         <Route path="/about" component={About} />
+        <Route path="/post/:slug/" component={ArticlePage} />
         <Route path="/post/:slug" component={ArticlePage} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />

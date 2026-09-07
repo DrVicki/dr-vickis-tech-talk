@@ -4,7 +4,20 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const docs = path.join(root, "docs");
-const required = ["index.html", "404.html", ".nojekyll", "rss.xml"];
+const required = [
+  "index.html",
+  "404.html",
+  ".nojekyll",
+  "rss.xml",
+  "about/index.html",
+  "post/terminal-workflow-hacks-for-developers/index.html",
+  "post/ai-agents-from-chat-to-action/index.html",
+  "post/personal-data-private-by-design/index.html",
+  "post/spatial-computing-beyond-headsets/index.html",
+  "post/human-checklist-before-adopting-ai/index.html",
+  "post/signals-that-a-tech-trend-will-stick/index.html",
+  "post/quiet-reinvention-of-search/index.html",
+];
 const errors = [];
 
 for (const file of required) {

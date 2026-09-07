@@ -16,9 +16,24 @@ const projectPath = "/dr-vickis-tech-talk/";
 const storageHero = "/manus-storage/hero-editorial_106889d6.jpg";
 const pagesHero = `${projectPath}assets/media/hero-editorial.jpg`;
 const indexHtml = (await readFile(indexPath, "utf8")).replaceAll(storageHero, pagesHero);
+const routeEntries = [
+  "about",
+  "post/terminal-workflow-hacks-for-developers",
+  "post/ai-agents-from-chat-to-action",
+  "post/personal-data-private-by-design",
+  "post/spatial-computing-beyond-headsets",
+  "post/human-checklist-before-adopting-ai",
+  "post/signals-that-a-tech-trend-will-stick",
+  "post/quiet-reinvention-of-search",
+];
 
 await writeFile(indexPath, indexHtml);
 await copyFile(indexPath, fallbackPath);
+for (const route of routeEntries) {
+  const routeDirectory = path.join(docsDir, route);
+  await mkdir(routeDirectory, { recursive: true });
+  await writeFile(path.join(routeDirectory, "index.html"), indexHtml);
+}
 await writeFile(path.join(docsDir, ".nojekyll"), "");
 await rm(path.join(docsDir, "__manus__"), { recursive: true, force: true });
 await rm(path.join(docsDir, ".gitkeep"), { force: true });
