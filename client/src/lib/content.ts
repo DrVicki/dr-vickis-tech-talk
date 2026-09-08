@@ -36,6 +36,144 @@ export const siteAssets = {
 
 export const articles: Article[] = [
   {
+    slug: "working-with-excel-data-without-formulas",
+    title: "Working with Excel Data Without Knowing a Single Formula",
+    excerpt:
+      "You do not need to become a spreadsheet expert before you can ask useful questions, spot patterns, and make a better decision.",
+    category: "AI",
+    date: "September 8, 2026",
+    readTime: "9 min read",
+    image: assetUrl("ai-spreadsheet-analysis.jpg", "/manus-storage/ai-spreadsheet-analysis_0d3dfe7d.jpg"),
+    imageAlt: "Editorial illustration of a spreadsheet transforming into charts and a verified decision path",
+    accent: "lime",
+    dek: "A five-step workflow—and three copy-ready prompts—for turning a familiar spreadsheet into a clear, verifiable decision.",
+    quote: "The goal is not to outsource judgment. It is to remove the setup friction between a real question and a useful first answer.",
+    sections: [
+      {
+        heading: "A spreadsheet is a decision tool, not a math exam",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "For most professionals, spreadsheets are a tool for making decisions—not a test of how many formulas you can remember. You should not have to master nested functions, build a manual PivotTable, or design a chart before you can ask a simple question about the numbers in front of you.",
+          },
+          {
+            type: "paragraph",
+            text: "Modern AI tools can shorten that distance. In Copilot for Excel, for example, you can ask a question in your own words and request a summary, trend, outlier, chart, or PivotTable. Microsoft’s current guidance still makes the essential caveat explicit: review, edit, and verify anything the AI creates.",
+          },
+          {
+            type: "paragraph",
+            text: "This is already changing how people work with business data. In Microsoft’s Eaton customer story, a project manager describes using Copilot to slice, group, and filter data around her needs. The useful shift is not the disappearance of analysis. It is that the first step can now be a question instead of a construction project.",
+          },
+        ],
+      },
+      {
+        heading: "The five-step ask-first workflow",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "**Open a familiar spreadsheet.** Choose a file you work with regularly and identify one question you have always wondered about.",
+              "**Ask for high-level trends.** Start with: `What are the three biggest trends in this data?`",
+              "**Verify the output.** Cross-check one or two claims against the raw numbers before accepting the summary.",
+              "**Follow the surprise.** Ask a second question about the result you did not expect.",
+              "**Make this your default first step.** Run the check before building a manual chart or PivotTable from scratch.",
+            ],
+          },
+          {
+            type: "tip",
+            text: "Use an AI tool approved for the data you are handling. Do not upload confidential, regulated, personal, or client data to an unapproved service.",
+          },
+          {
+            type: "paragraph",
+            text: "The sequence matters. Ask broadly enough to discover what deserves attention, then narrow the question and verify the evidence. You are using AI to generate a hypothesis—not to manufacture certainty.",
+          },
+        ],
+      },
+      {
+        heading: "Prompt 1: Spot trends and assess risk",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Use this prompt when you need a fast, plain-language read of a sheet without hiding uncertainty behind a confident tone.",
+          },
+          {
+            type: "code",
+            language: "Plaintext",
+            code: "# CONTEXT\nI work with spreadsheets I do not fully understand, and getting a confident answer to a real question—\"what is actually going on here?\"—usually means learning to build a chart or PivotTable first.\n\n# ROLE\nAct as a data analyst who translates raw numbers for people who are not analysts. The real risk is not only giving a wrong answer; it is giving a confidently worded answer built on a shaky read, mistaking a seasonal blip for a real trend, or treating a small sample as a reliable pattern.\n\n# RESPONSE GUIDELINES\n1. Read the data and answer the specific question in plain language.\n2. State your confidence in the answer and explain why.\n\n# TASK CRITERIA\n1. If a pattern could plausibly be a fluke, a small sample, or the result of one outlier, say so explicitly.\n2. Avoid analyst jargon. Explain the findings as you would to a colleague over coffee.\n\n# MY DETAILS\n- Paste or describe your data: [PASTE YOUR DATA OR DESCRIBE THE SHEET]\n- Your specific question: [E.G., WHAT ARE THE BIGGEST TRENDS IN THIS DATA?]\n\n# RESPONSE FORMAT\nReturn the answer in plain language, followed by a one-line Confidence note explaining any caveat.",
+          },
+          {
+            type: "tip",
+            text: "A confidence label is useful only when the explanation names the evidence: sample size, missing values, outliers, seasonality, or another concrete limitation.",
+          },
+        ],
+      },
+      {
+        heading: "Prompt 2: Turn the finding into an action",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Knowing that sales dipped in one region is not yet a decision. This follow-up forces the analysis to name the action, the trade-off, and the assumption that could overturn the recommendation.",
+          },
+          {
+            type: "code",
+            language: "Plaintext",
+            code: "# CONTEXT\nKnowing the trend does not tell me what to do about it. Translating \"sales dipped in the West\" into an actual decision is where I usually get stuck.\n\n# ROLE\nStay in character as the same analyst. Never return a finding without also naming the decision it implies; a number without a recommendation can become a slide nobody acts on.\n\n# RESPONSE GUIDELINES\n1. Translate the finding from Step 1 into a specific recommendation: what should change, and what happens if nothing changes.\n\n# TASK CRITERIA\n1. State the recommendation as an action, not a restatement of the data.\n2. Name the real trade-off or risk; do not present the recommendation as risk-free.\n3. Name one specific data point that, if wrong, would change the recommendation.\n\n# MY DETAILS\n- Constraints on possible actions, such as budget, timing, or authority: [OPTIONAL]\n\n# RESPONSE FORMAT\nReturn the recommendation, the trade-off, and the one data point that would change your mind.",
+          },
+        ],
+      },
+      {
+        heading: "Prompt 3: Build a reusable routine",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "If the same report returns every week or month, stop beginning with a blank chat. Ask the AI to turn your best questions into a small, repeatable review checklist.",
+          },
+          {
+            type: "code",
+            language: "Plaintext",
+            code: "# CONTEXT\nI return to this sheet—or this type of sheet—regularly. I want a standard set of questions to run whenever it is updated instead of starting cold each time.\n\n# ROLE\nStay in character as the same analyst.\n\n# RESPONSE GUIDELINES\n1. Build a short reusable list of the three or four questions worth asking this data every time it is updated.\n\n# TEMPLATE CRITERIA\n1. Keep the questions specific to this data type. Avoid generic advice such as \"check trends.\"\n\n# RESPONSE FORMAT\nReturn the finished list as one reusable block.",
+          },
+        ],
+      },
+      {
+        heading: "Verify before you visualize",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "A polished chart can make a weak interpretation feel stronger than it is. Before asking for the visual, confirm the time period, units, filters, missing values, and row count. Then check at least one important claim against the source cells.",
+          },
+          {
+            type: "list",
+            items: [
+              "Ask which columns and rows support the conclusion.",
+              "Check whether one unusually large value is driving the pattern.",
+              "Compare the same period across prior years before calling a change a trend.",
+              "Confirm that percentages use the right denominator.",
+              "Request the chart only after the underlying claim survives those checks.",
+            ],
+          },
+          {
+            type: "tip",
+            text: "AI can accelerate analysis, but it cannot decide what level of evidence your organization requires. Keep that standard human and explicit.",
+          },
+        ],
+      },
+      {
+        heading: "Make the routine easier to repeat",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "If you use a platform that supports saved instructions—such as a custom assistant, project, or reusable prompt—store the three prompts together with your standing questions. When the sheet is updated, provide the approved data and run the same sequence: observe, verify, decide, and record what changed.",
+          },
+          {
+            type: "paragraph",
+            text: "Keep the human checkpoint. Review the recommendation, document the source period, and save the assumptions that mattered. The best repeatable workflow is not the one that produces an answer with the fewest clicks. It is the one that makes a later reviewer able to understand why the answer deserved trust.",
+          },
+        ],
+      },
+    ],
+  },
+  {
     slug: "git-is-a-time-machine-not-a-backup-button",
     title: "Git Is a Time Machine, Not a Backup Button",
     excerpt:
