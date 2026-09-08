@@ -1,5 +1,22 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { ArrowLeft, ArrowUpRight, Check, Clock, Copy, Quote, Share2, Terminal } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  Check,
+  Clock,
+  Copy,
+  Download,
+  Facebook,
+  FileSpreadsheet,
+  FileText,
+  Link2,
+  Linkedin,
+  Mail,
+  Package,
+  Quote,
+  Share2,
+  Terminal,
+} from "lucide-react";
 import { Link } from "wouter";
 import Prism from "prismjs";
 import "prismjs/components/prism-bash";
@@ -7,10 +24,70 @@ import { articles, type ArticleBlock } from "@/lib/content";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
+const EXCEL_ARTICLE_SLUG = "working-with-excel-data-without-formulas";
+
+const downloadUrl = (fileName: string, storagePath: string) =>
+  import.meta.env.VITE_USE_LOCAL_ASSETS === "true"
+    ? `${import.meta.env.BASE_URL}assets/downloads/${fileName}`
+    : storagePath;
+
+const excelDownloads = {
+  checklist: downloadUrl(
+    "dr-vicki-excel-ai-checklist.xlsx",
+    "/manus-storage/dr-vicki-excel-ai-checklist_390f1540.xlsx",
+  ),
+  promptPack: downloadUrl(
+    "dr-vicki-excel-ai-prompt-pack.zip",
+    "/manus-storage/dr-vicki-excel-ai-prompt-pack_79529e38.zip",
+  ),
+  prompts: [
+    {
+      label: "Prompt 1",
+      title: "Spot trends & assess risk",
+      description: "A plain-language first read with an evidence-based confidence note.",
+      fileName: "01-spot-trends-and-assess-risk.txt",
+      href: downloadUrl(
+        "excel-ai-prompts/01-spot-trends-and-assess-risk.txt",
+        "/manus-storage/01-spot-trends-and-assess-risk_03838217.txt",
+      ),
+    },
+    {
+      label: "Prompt 2",
+      title: "Turn findings into action",
+      description: "Convert a verified finding into an action, trade-off, and decision trigger.",
+      fileName: "02-turn-findings-into-action.txt",
+      href: downloadUrl(
+        "excel-ai-prompts/02-turn-findings-into-action.txt",
+        "/manus-storage/02-turn-findings-into-action_4da42dc6.txt",
+      ),
+    },
+    {
+      label: "Prompt 3",
+      title: "Build a reusable routine",
+      description: "Create standing questions for every weekly or monthly update.",
+      fileName: "03-build-a-reusable-routine.txt",
+      href: downloadUrl(
+        "excel-ai-prompts/03-build-a-reusable-routine.txt",
+        "/manus-storage/03-build-a-reusable-routine_d294dc9a.txt",
+      ),
+    },
+  ],
+};
+
 function formatInline(text: string): ReactNode[] {
-  return text.split(/(`[^`]+`)/g).map((part, index) => {
+  return text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).map((part, index) => {
     if (part.startsWith("`") && part.endsWith("`")) {
-      return <code key={`${part}-${index}`} className="rounded-md bg-[#071a2e]/7 px-1.5 py-0.5 font-mono text-[.9em] font-semibold text-[#173d68]">{part.slice(1, -1)}</code>;
+      return (
+        <code
+          key={`${part}-${index}`}
+          className="rounded-md bg-[#071a2e]/7 px-1.5 py-0.5 font-mono text-[.9em] font-semibold text-[#173d68]"
+        >
+          {part.slice(1, -1)}
+        </code>
+      );
+    }
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return <strong key={`${part}-${index}`} className="font-bold text-[#071a2e]">{part.slice(2, -2)}</strong>;
     }
     return part;
   });
@@ -41,13 +118,22 @@ function CodeBlock({ code, language = "Code" }: { code: string; language?: strin
   return (
     <div className="my-7 overflow-hidden rounded-[20px] bg-[#06162b] shadow-[0_20px_50px_rgba(7,26,46,.13)]">
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 text-[#8fa2b7] sm:px-5">
-        <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em]"><Terminal className="h-3.5 w-3.5 text-[#c7dd2b]" /> {language}</span>
-        <button type="button" onClick={copyCode} className="flex items-center gap-2 rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] transition hover:bg-white/10 hover:text-white" aria-label={`Copy ${language} code`}>
+        <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em]">
+          <Terminal className="h-3.5 w-3.5 text-[#c7dd2b]" /> {language}
+        </span>
+        <button
+          type="button"
+          onClick={copyCode}
+          className="flex items-center gap-2 rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] transition hover:bg-white/10 hover:text-white"
+          aria-label={`Copy ${language} code`}
+        >
           {copied ? <Check className="h-3.5 w-3.5 text-[#c7dd2b]" /> : <Copy className="h-3.5 w-3.5" />}
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
-      <pre className="syntax-code overflow-x-auto p-5 text-[13px] leading-7 text-[#e2eaf2] sm:p-6 sm:text-sm"><code dangerouslySetInnerHTML={{ __html: highlightedCode }} /></pre>
+      <pre className="syntax-code overflow-x-auto p-5 text-[13px] leading-7 text-[#e2eaf2] sm:p-6 sm:text-sm">
+        <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
+      </pre>
     </div>
   );
 }
@@ -70,6 +156,172 @@ function ArticleContentBlock({ block }: { block: ArticleBlock }) {
     <div className="article-tip">
       <span className="article-tip-label">Dr. Vicki’s note</span>
       <p>{formatInline(block.text)}</p>
+    </div>
+  );
+}
+
+function ExcelDownloadToolkit() {
+  return (
+    <div id="downloads" role="region" className="download-toolkit scroll-mt-28" aria-labelledby="downloads-heading">
+      <div className="download-toolkit-glow" aria-hidden="true" />
+      <div className="relative z-10">
+        <div className="flex flex-wrap items-start justify-between gap-5">
+          <div className="max-w-xl">
+            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#c7dd2b]">Download the workflow</p>
+            <h2 id="downloads-heading" className="mt-4 font-display text-4xl font-medium leading-[.95] text-white sm:text-5xl">
+              Take the Excel AI toolkit with you.
+            </h2>
+            <p className="mt-5 max-w-lg text-sm leading-6 text-[#b8c7d7]">
+              Use the prompts to ask better questions, then document the evidence, assumptions, and decision in the companion workbook.
+            </p>
+          </div>
+          <span className="rounded-full border border-white/15 bg-white/8 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.16em] text-[#dfe8f1]">
+            4 files · ready to use
+          </span>
+        </div>
+
+        <div className="mt-9 grid gap-4 sm:grid-cols-2">
+          <a
+            href={excelDownloads.checklist}
+            download="dr-vicki-excel-ai-checklist.xlsx"
+            className="download-feature-card group"
+          >
+            <span className="download-feature-icon"><FileSpreadsheet className="h-6 w-6" /></span>
+            <span className="min-w-0">
+              <span className="block text-[10px] font-bold uppercase tracking-[.18em] text-[#c7dd2b]">Excel workbook · .xlsx</span>
+              <span className="mt-2 block font-display text-2xl font-medium leading-tight text-white">Decision & verification checklist</span>
+              <span className="mt-2 block text-xs leading-5 text-[#aebfd0]">Five formatted sheets for the first review, evidence checks, standing questions, and recurring decisions.</span>
+            </span>
+            <Download className="ml-auto h-5 w-5 shrink-0 text-[#c7dd2b] transition-transform group-hover:translate-y-0.5" />
+          </a>
+
+          <a
+            href={excelDownloads.promptPack}
+            download="dr-vicki-excel-ai-prompt-pack.zip"
+            className="download-feature-card group"
+          >
+            <span className="download-feature-icon"><Package className="h-6 w-6" /></span>
+            <span className="min-w-0">
+              <span className="block text-[10px] font-bold uppercase tracking-[.18em] text-[#ff806b]">Complete pack · .zip</span>
+              <span className="mt-2 block font-display text-2xl font-medium leading-tight text-white">All three prompt templates</span>
+              <span className="mt-2 block text-xs leading-5 text-[#aebfd0]">Plain-text files plus a concise guide to the observe, verify, decide, and record sequence.</span>
+            </span>
+            <Download className="ml-auto h-5 w-5 shrink-0 text-[#ff806b] transition-transform group-hover:translate-y-0.5" />
+          </a>
+        </div>
+
+        <div className="mt-7 flex items-center gap-3">
+          <span className="h-px flex-1 bg-white/12" />
+          <span className="text-[9px] font-bold uppercase tracking-[.18em] text-[#8296aa]">Or choose one prompt</span>
+          <span className="h-px flex-1 bg-white/12" />
+        </div>
+
+        <div className="mt-5 grid gap-3 md:grid-cols-3">
+          {excelDownloads.prompts.map((prompt) => (
+            <a key={prompt.fileName} href={prompt.href} download={prompt.fileName} className="download-prompt-card group">
+              <span className="flex items-center justify-between gap-4">
+                <span className="inline-flex items-center gap-2 text-[9px] font-bold uppercase tracking-[.18em] text-[#8fa2b7]">
+                  <FileText className="h-3.5 w-3.5 text-[#c7dd2b]" /> {prompt.label} · .txt
+                </span>
+                <Download className="h-4 w-4 text-[#8fa2b7] transition group-hover:text-[#c7dd2b]" />
+              </span>
+              <span className="mt-4 block font-display text-xl font-medium leading-tight text-white">{prompt.title}</span>
+              <span className="mt-2 block text-[11px] leading-5 text-[#9fb0c1]">{prompt.description}</span>
+            </a>
+          ))}
+        </div>
+
+        <p className="mt-6 flex items-start gap-2 text-[10px] leading-4 text-[#8296aa]">
+          <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#c7dd2b]" />
+          Built for Microsoft Excel, but the prompt templates also work with other approved AI tools that can analyze spreadsheet data.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function SocialShare({ title, excerpt }: { title: string; excerpt: string }) {
+  const [copied, setCopied] = useState(false);
+  const canonicalUrl = typeof window === "undefined" ? "" : `${window.location.origin}${window.location.pathname}`;
+  const encodedUrl = encodeURIComponent(canonicalUrl);
+  const encodedTitle = encodeURIComponent(title);
+  const encodedText = encodeURIComponent(`${title} — ${excerpt}`);
+
+  const copyLink = async () => {
+    await navigator.clipboard.writeText(canonicalUrl);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1800);
+  };
+
+  const nativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text: excerpt, url: canonicalUrl });
+        return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+      }
+    }
+    await copyLink();
+  };
+
+  return (
+    <div className="share-panel" aria-label="Share this article">
+      <div className="flex items-center gap-2">
+        <span className="grid h-8 w-8 place-items-center rounded-full bg-[#071a2e] text-[#c7dd2b]"><Share2 className="h-4 w-4" /></span>
+        <div>
+          <p className="text-xs font-bold text-[#071a2e]">Share this note</p>
+          <p className="mt-0.5 text-[9px] leading-3 text-[#7b8796]">Send the useful part onward.</p>
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-6 lg:grid-cols-2">
+        <a
+          href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+          target="_blank"
+          rel="noreferrer"
+          className="share-action"
+          aria-label="Share on LinkedIn"
+          title="Share on LinkedIn"
+        >
+          <Linkedin className="h-4 w-4" /><span>LinkedIn</span>
+        </a>
+        <a
+          href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+          target="_blank"
+          rel="noreferrer"
+          className="share-action"
+          aria-label="Share on Facebook"
+          title="Share on Facebook"
+        >
+          <Facebook className="h-4 w-4" /><span>Facebook</span>
+        </a>
+        <a
+          href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`}
+          target="_blank"
+          rel="noreferrer"
+          className="share-action"
+          aria-label="Share on X"
+          title="Share on X"
+        >
+          <span className="text-sm font-black leading-none">X</span><span>Post</span>
+        </a>
+        <a
+          href={`mailto:?subject=${encodedTitle}&body=${encodeURIComponent(`${excerpt}\n\n${canonicalUrl}`)}`}
+          className="share-action"
+          aria-label="Share by email"
+          title="Share by email"
+        >
+          <Mail className="h-4 w-4" /><span>Email</span>
+        </a>
+        <button type="button" onClick={copyLink} className="share-action" aria-label="Copy article link" title="Copy article link">
+          {copied ? <Check className="h-4 w-4 text-[#315f95]" /> : <Link2 className="h-4 w-4" />}
+          <span>{copied ? "Copied" : "Copy"}</span>
+        </button>
+        <button type="button" onClick={nativeShare} className="share-action" aria-label="Open device share menu" title="More sharing options">
+          <Share2 className="h-4 w-4" /><span>More</span>
+        </button>
+      </div>
     </div>
   );
 }
@@ -100,14 +352,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
   }
 
   const related = articles.filter((item) => item.slug !== article.slug).slice(0, 2);
-
-  const shareArticle = async () => {
-    if (navigator.share) {
-      await navigator.share({ title: article.title, text: article.excerpt, url: window.location.href });
-    } else {
-      await navigator.clipboard.writeText(window.location.href);
-    }
-  };
+  const hasExcelToolkit = article.slug === EXCEL_ARTICLE_SLUG;
 
   return (
     <div className="min-h-screen bg-[#f8f3e8] text-[#071a2e]">
@@ -137,6 +382,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#7b8796]">In this note</p>
               <ol className="mt-5 space-y-4 border-l border-[#132841]/15 pl-4 text-xs font-semibold leading-5 text-[#627086]">
                 {article.sections.map((section, index) => <li key={section.heading}><a href={`#section-${index + 1}`} className="transition hover:text-[#315f95]">{section.heading}</a></li>)}
+                {hasExcelToolkit && <li><a href="#downloads" className="font-bold text-[#315f95] transition hover:text-[#ff6048]">Download the toolkit</a></li>}
               </ol>
             </div>
           </aside>
@@ -155,12 +401,12 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                 {section.paragraphs?.map((paragraph) => <p key={paragraph}>{formatInline(paragraph)}</p>)}
               </section>
             ))}
+            {hasExcelToolkit && <ExcelDownloadToolkit />}
           </div>
 
-          <aside className="lg:block">
+          <aside>
             <div className="lg:sticky lg:top-28">
-              <button onClick={shareArticle} className="flex items-center gap-2 rounded-full border border-[#132841]/15 bg-white/40 px-4 py-2.5 text-xs font-bold transition hover:bg-white"><Share2 className="h-3.5 w-3.5" /> Share note</button>
-              <p className="mt-4 text-[10px] leading-4 text-[#7b8796]">Share sheet opens on supported devices. Otherwise, the link is copied.</p>
+              <SocialShare title={article.title} excerpt={article.excerpt} />
             </div>
           </aside>
         </article>

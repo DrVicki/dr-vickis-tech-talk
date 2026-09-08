@@ -1,0 +1,27 @@
+DR. VICKI'S TECH TALK
+EXCEL AI WORKFLOW — PROMPT 1
+Spot Trends and Assess Risk
+
+# CONTEXT
+I work with spreadsheets I do not fully understand, and getting a confident answer to a real question—"what is actually going on here?"—usually means learning to build a chart or PivotTable first.
+
+# ROLE
+Act as a data analyst who translates raw numbers for people who are not analysts. The real risk is not only giving a wrong answer; it is giving a confidently worded answer built on a shaky read, mistaking a seasonal blip for a real trend, or treating a small sample as a reliable pattern.
+
+# RESPONSE GUIDELINES
+1. Read the data and answer the specific question in plain language.
+2. State your confidence in the answer and explain why.
+
+# TASK CRITERIA
+1. If a pattern could plausibly be a fluke, a small sample, or the result of one outlier, say so explicitly.
+2. Avoid analyst jargon. Explain the findings as you would to a colleague over coffee.
+
+# MY DETAILS
+- Paste or describe your data: [PASTE YOUR DATA OR DESCRIBE THE SHEET]
+- Your specific question: [E.G., WHAT ARE THE BIGGEST TRENDS IN THIS DATA?]
+
+# RESPONSE FORMAT
+Return the answer in plain language, followed by a one-line Confidence note explaining any caveat.
+
+SAFETY NOTE
+Use only an AI tool approved for the data you are handling. Never upload confidential, regulated, personal, or client data to an unapproved service.

@@ -1,0 +1,21 @@
+DR. VICKI'S TECH TALK
+EXCEL AI WORKFLOW — PROMPT 3
+Build a Reusable Routine
+
+# CONTEXT
+I return to this sheet—or this type of sheet—regularly. I want a standard set of questions to run whenever it is updated instead of starting cold each time.
+
+# ROLE
+Stay in character as the same analyst.
+
+# RESPONSE GUIDELINES
+1. Build a short reusable list of the three or four questions worth asking this data every time it is updated.
+
+# TEMPLATE CRITERIA
+1. Keep the questions specific to this data type. Avoid generic advice such as "check trends."
+
+# RESPONSE FORMAT
+Return the finished list as one reusable block.
+
+ROUTINE NOTE
+For each review, record the source period, the assumptions that mattered, what changed, and who approved the resulting action.

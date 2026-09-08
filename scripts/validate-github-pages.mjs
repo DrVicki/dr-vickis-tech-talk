@@ -19,6 +19,11 @@ const required = [
   "post/human-checklist-before-adopting-ai/index.html",
   "post/signals-that-a-tech-trend-will-stick/index.html",
   "post/quiet-reinvention-of-search/index.html",
+  "assets/downloads/dr-vicki-excel-ai-checklist.xlsx",
+  "assets/downloads/dr-vicki-excel-ai-prompt-pack.zip",
+  "assets/downloads/excel-ai-prompts/01-spot-trends-and-assess-risk.txt",
+  "assets/downloads/excel-ai-prompts/02-turn-findings-into-action.txt",
+  "assets/downloads/excel-ai-prompts/03-build-a-reusable-routine.txt",
 ];
 const errors = [];
 

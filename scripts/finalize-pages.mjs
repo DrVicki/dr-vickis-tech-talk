@@ -6,11 +6,15 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 const docsDir = path.join(projectRoot, "docs");
 const mediaSource = path.join(projectRoot, "pages-assets");
 const mediaTarget = path.join(docsDir, "assets", "media");
+const downloadsSource = path.join(projectRoot, "pages-downloads");
+const downloadsTarget = path.join(docsDir, "assets", "downloads");
 const indexPath = path.join(docsDir, "index.html");
 const fallbackPath = path.join(docsDir, "404.html");
 
 await mkdir(mediaTarget, { recursive: true });
 await cp(mediaSource, mediaTarget, { recursive: true });
+await mkdir(downloadsTarget, { recursive: true });
+await cp(downloadsSource, downloadsTarget, { recursive: true });
 
 const projectPath = "/dr-vickis-tech-talk/";
 const storageHero = "/manus-storage/hero-editorial_106889d6.jpg";

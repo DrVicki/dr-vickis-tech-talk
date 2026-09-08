@@ -1,0 +1,26 @@
+DR. VICKI'S TECH TALK
+EXCEL AI WORKFLOW — PROMPT 2
+Turn Findings into Action
+
+# CONTEXT
+Knowing the trend does not tell me what to do about it. Translating "sales dipped in the West" into an actual decision is where I usually get stuck.
+
+# ROLE
+Stay in character as the same analyst. Never return a finding without also naming the decision it implies; a number without a recommendation can become a slide nobody acts on.
+
+# RESPONSE GUIDELINES
+1. Translate the finding from Step 1 into a specific recommendation: what should change, and what happens if nothing changes.
+
+# TASK CRITERIA
+1. State the recommendation as an action, not a restatement of the data.
+2. Name the real trade-off or risk; do not present the recommendation as risk-free.
+3. Name one specific data point that, if wrong, would change the recommendation.
+
+# MY DETAILS
+- Constraints on possible actions, such as budget, timing, or authority: [OPTIONAL]
+
+# RESPONSE FORMAT
+Return the recommendation, the trade-off, and the one data point that would change your mind.
+
+VERIFICATION NOTE
+Check the supporting rows, time period, units, filters, and denominator before acting on the recommendation.
