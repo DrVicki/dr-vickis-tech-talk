@@ -36,6 +36,145 @@ export const siteAssets = {
 
 export const articles: Article[] = [
   {
+    slug: "how-to-let-ai-write-excel-formulas-for-you",
+    title: "How to Let AI Write Excel Formulas for You",
+    excerpt:
+      "The hard part is often not knowing the result you want. It is remembering the exact syntax—and catching the quiet ways a plausible formula can be wrong.",
+    category: "AI",
+    date: "September 11, 2026",
+    readTime: "8 min read",
+    image: assetUrl("ai-excel-formulas.jpg", "/manus-storage/ai-excel-formulas_6581e59d.jpg"),
+    imageAlt: "Editorial collage showing a plain-language calculation becoming a tested spreadsheet formula",
+    accent: "coral",
+    dek: "A practical prompt sequence for translating intent into a formula, stress-testing the ugly rows, and saving the reasoning for next time.",
+    quote: "Treat the first formula as a draft. The real skill is making its assumptions visible before a plausible number earns your trust.",
+    sections: [
+      {
+        heading: "The syntax hunt is not the real work",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "The familiar Excel struggle is not always deciding what result you need. It is remembering the exact function, nesting the arguments in the right order, and adapting a formula copied from an old workbook or forum post until the error messages disappear.",
+          },
+          {
+            type: "paragraph",
+            text: "AI can remove much of that translation work. Microsoft’s current Copilot in Excel guidance says it can generate formula columns and rows, suggest a formula for a single cell, build lookups, and explain existing formulas. Other general-purpose assistants can draft formulas too when you describe the workbook structure clearly.",
+          },
+          {
+            type: "paragraph",
+            text: "That does not make formula knowledge irrelevant. It changes where your attention belongs: from recalling syntax to specifying intent, exposing assumptions, and verifying the result. Microsoft’s guidance is direct on this point—review, edit, and verify anything AI creates.",
+          },
+          {
+            type: "tip",
+            text: "Do not paste confidential, regulated, personal, or client data into an AI service unless your organization has explicitly approved that tool and workflow.",
+          },
+        ],
+      },
+      {
+        heading: "The five-step formula-first workflow",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "**Name the result, not the function.** Describe what the completed cell should tell you in plain English.",
+              "**Describe the sheet.** Name the relevant columns, ranges, table names, data types, and the Excel version you use.",
+              "**Ask for syntax plus an explanation.** Require the assistant to translate every important part of the formula back into ordinary language.",
+              "**Test a small sample by hand.** Include a normal row, a blank, a duplicate, a zero, and a value stored as text when those cases are possible.",
+              "**Save the prompt with the formula.** The reasoning travels between workbooks more reliably than a cell reference copied without context.",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "The order matters. A formula generator cannot infer a business rule you never state. If blanks should count as zero, duplicates should be ignored, or the match must be case-sensitive, put that rule in the request before treating the output as finished.",
+          },
+        ],
+      },
+      {
+        heading: "Prompt 1: Translate the goal into a formula",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Start here when you know the calculation you want but cannot—or do not want to—reconstruct the syntax from memory.",
+          },
+          {
+            type: "code",
+            language: "Plaintext",
+            code: "# CONTEXT\nI know what I want to calculate, but I do not remember the exact Excel formula syntax. I usually end up hunting through old spreadsheets or forum posts and reverse-engineering something close.\n\n# ROLE\nAct as a spreadsheet formula specialist who has debugged more broken formulas than they can count. Formulas often fail quietly by producing a plausible number because no one specified how to handle a blank cell, duplicate, error value, or number stored as text.\n\n# RESPONSE GUIDELINES\n1. Translate my plain-language goal into a working Excel formula.\n2. Before finalizing it, ask about the edge cases that matter for this calculation, such as blanks, text-formatted numbers, zeros, errors, and duplicates.\n\n# TASK CRITERIA\n1. Explain what the formula does in plain language alongside the formula itself.\n2. Flag every assumption you made about the data, such as \"assumes column B has no blanks,\" so I can confirm it.\n3. Use functions available in my Excel version, or identify any compatibility limitation.\n\n# MY DETAILS\n- What I want to calculate: [E.G., AVERAGE DEAL SIZE BY REGION]\n- Relevant columns, ranges, table names, and sheet names: [DESCRIBE YOUR DATA LAYOUT]\n- My Excel version or platform: [E.G., MICROSOFT 365 ON WINDOWS]\n\n# RESPONSE FORMAT\nReturn the formula, a plain-language explanation, the assumptions made, and three small test cases with expected results.",
+          },
+          {
+            type: "tip",
+            text: "A formula you cannot explain is difficult to audit. Ask what each function and reference contributes before you paste it into a production workbook.",
+          },
+        ],
+      },
+      {
+        heading: "Prompt 2: Stress-test the ugly rows",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "A formula that works on five clean sample rows can still fail silently farther down the sheet. This follow-up turns the assumptions from Prompt 1 into a focused edge-case review.",
+          },
+          {
+            type: "code",
+            language: "Plaintext",
+            code: "# CONTEXT\nThe first formula works on my clean sample rows, but the full sheet may contain blanks, duplicate entries, inconsistent labels, errors, dates stored as text, and numbers stored as text.\n\n# ROLE\nStay in character as the same spreadsheet formula specialist. Never trust a formula until it has been checked against the ugly rows, not just the clean ones.\n\n# RESPONSE GUIDELINES\n1. Using the assumptions from the first response, identify the specific edge cases in my actual data that could break or distort the formula.\n2. Adjust the formula to handle them, or say explicitly when cleaning the source data is safer than adding more formula logic.\n\n# TASK CRITERIA\n1. Name the failure mode precisely. Do not say only \"this might not work.\" Explain what value the formula could silently produce and why that result would be wrong.\n2. Preserve a readable formula. If defensive logic makes it too difficult to audit, recommend a helper column or data-cleaning step instead.\n\n# MY DETAILS\n- Original formula and assumptions: [PASTE THE FIRST RESPONSE]\n- Known messiness in the data: [BLANKS, MIXED FORMATS, DUPLICATES, ERRORS, OR OTHER NOTES]\n\n# RESPONSE FORMAT\nReturn the edge cases found, the updated formula, a before-and-after test table, and one line naming anything safer to fix in the data than in the formula.",
+          },
+        ],
+      },
+      {
+        heading: "Prompt 3: Make the reasoning reusable",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "A saved formula is tied to one layout. A saved prompt can be adapted when the same calculation appears in a new workbook with different columns, table names, or business rules.",
+          },
+          {
+            type: "code",
+            language: "Plaintext",
+            code: "# CONTEXT\nI repeat similar calculations across different spreadsheets. I want a small prompt library, not just saved formulas, because a formula alone does not travel well between sheets with different layouts.\n\n# ROLE\nStay in character as the same spreadsheet formula specialist.\n\n# RESPONSE GUIDELINES\n1. Build a concise reusable library entry for this calculation so I can regenerate and stress-test it for a new sheet layout.\n\n# TEMPLATE CRITERIA\n1. Include the calculation goal, the adaptable prompt, the required layout details, the known edge cases, and the minimum test cases.\n2. Replace workbook-specific cell references with clear placeholders.\n\n# RESPONSE FORMAT\nReturn one reusable block with these labels: Purpose, Prompt, Inputs to replace, Edge cases, and Test cases.",
+          },
+        ],
+      },
+      {
+        heading: "What to test before you trust the result",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Testing does not require a full quality-assurance department. Build a tiny set of rows whose answers you can calculate by hand, then compare Excel’s result with your expected value. Include the cases most likely to expose a hidden assumption.",
+          },
+          {
+            type: "list",
+            items: [
+              "A normal row with an obvious expected result.",
+              "A blank input and a zero input—they are not always the same business condition.",
+              "A number stored as text and a date stored as text.",
+              "A duplicated record when the calculation depends on unique transactions or people.",
+              "A misspelled category, extra space, or inconsistent capitalization.",
+              "A missing lookup value and a formula error such as `#N/A` or `#DIV/0!`.",
+            ],
+          },
+          {
+            type: "tip",
+            text: "Do not hide every error with IFERROR. Decide whether an error should become zero, blank, a warning label, or a visible problem that someone must fix.",
+          },
+        ],
+      },
+      {
+        heading: "Build a formula assistant, not a formula vending machine",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "If your preferred AI platform supports saved instructions, projects, custom assistants, or skills, store the three prompts with your organization’s formula conventions and data-handling rules. Then your next request can begin with the business calculation instead of rebuilding the review process.",
+          },
+          {
+            type: "paragraph",
+            text: "Keep the final paste human. Confirm the sheet layout, review the assumptions, run the test cases, and save the plain-language explanation beside the formula library. The goal is not to stop learning Excel. It is to spend less time retrieving punctuation and more time deciding what the calculation should mean.",
+          },
+        ],
+      },
+    ],
+  },
+  {
     slug: "working-with-excel-data-without-formulas",
     title: "Working with Excel Data Without Knowing a Single Formula",
     excerpt:

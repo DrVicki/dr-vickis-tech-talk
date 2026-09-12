@@ -22,6 +22,7 @@ const pagesHero = `${projectPath}assets/media/hero-editorial.jpg`;
 const indexHtml = (await readFile(indexPath, "utf8")).replaceAll(storageHero, pagesHero);
 const routeEntries = [
   "about",
+  "post/how-to-let-ai-write-excel-formulas-for-you",
   "post/working-with-excel-data-without-formulas",
   "post/git-is-a-time-machine-not-a-backup-button",
   "post/terminal-workflow-hacks-for-developers",
