@@ -9,6 +9,7 @@ const required = [
   "404.html",
   ".nojekyll",
   "rss.xml",
+  "rss.xsl",
   "about/index.html",
   "post/the-real-cost-of-a-click-understanding-data-centers/index.html",
   "post/how-to-let-ai-write-excel-formulas-for-you/index.html",
@@ -45,6 +46,8 @@ for (const file of required) {
 const indexHtml = await readFile(path.join(docs, "index.html"), "utf8");
 const fallbackHtml = await readFile(path.join(docs, "404.html"), "utf8");
 const guide = await readFile(path.join(root, "GITHUB_PAGES.md"), "utf8");
+const rssXml = await readFile(path.join(docs, "rss.xml"), "utf8");
+const rssXsl = await readFile(path.join(docs, "rss.xsl"), "utf8");
 const media = await readdir(path.join(docs, "assets", "media"));
 const bundlePath = indexHtml.match(/src="\/dr-vickis-tech-talk\/(assets\/index-[^"]+\.js)"/)?.[1];
 const bundle = bundlePath ? await readFile(path.join(docs, bundlePath), "utf8") : "";
@@ -59,6 +62,8 @@ if (!guide.includes("main") || !guide.includes("/docs")) errors.push("Deployment
 if (!bundle.includes("formula-challenge")) errors.push("Production bundle is missing the public formula challenge");
 if (!bundle.includes("Copy formula") || !bundle.includes("Copy prompt")) errors.push("Production bundle is missing formula or prompt copy controls");
 if (!bundle.includes("api.github.com/repos/DrVicki/dr-vickis-tech-talk/issues")) errors.push("Production bundle is missing the public solution feed");
+if (!rssXml.includes('<?xml-stylesheet type="text/xsl" href="rss.xsl"?>')) errors.push("RSS feed is missing its browser stylesheet");
+if (!rssXsl.includes("This is an RSS feed") || !rssXsl.includes('<xsl:for-each select="item">')) errors.push("RSS stylesheet is missing the feed explanation or article renderer");
 
 try {
   await access(path.join(docs, "__manus__"));
