@@ -276,22 +276,31 @@ function DatasetBlock({ block }: { block: Extract<ArticleBlock, { type: "dataset
 }
 
 function ResourceLinks({ block }: { block: Extract<ArticleBlock, { type: "links" }> }) {
+  const featured = block.variant === "featured";
+
   return (
-    <div className="my-8 grid gap-3 sm:grid-cols-2">
+    <div className={`my-8 grid gap-3 ${featured ? "grid-cols-1" : "sm:grid-cols-2"}`}>
       {block.items.map((item) => (
         <a
           key={item.href}
           href={item.href}
           target="_blank"
           rel="noreferrer"
-          className="group rounded-[18px] border border-[#132841]/12 bg-[#fffaf1] p-5 shadow-[0_12px_35px_rgba(7,26,46,.06)] transition hover:-translate-y-0.5 hover:border-[#315f95]/40 hover:shadow-[0_18px_45px_rgba(7,26,46,.11)]"
+          className={`group rounded-[18px] p-5 shadow-[0_12px_35px_rgba(7,26,46,.06)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_45px_rgba(7,26,46,.11)] ${
+            featured
+              ? "border border-[#c7dd2b]/40 bg-[#071a2e] sm:p-7"
+              : "border border-[#132841]/12 bg-[#fffaf1] hover:border-[#315f95]/40"
+          }`}
         >
           <span className="flex items-start justify-between gap-4">
-            <span className="font-display text-xl font-semibold leading-tight text-[#071a2e] group-hover:text-[#315f95]">{item.title}</span>
-            <ExternalLink className="mt-0.5 h-4 w-4 shrink-0 text-[#ff6048]" />
+            <span className={`font-display font-semibold leading-tight ${featured ? "text-2xl text-white sm:text-3xl" : "text-xl text-[#071a2e] group-hover:text-[#315f95]"}`}>{item.title}</span>
+            <ExternalLink className={`mt-0.5 h-4 w-4 shrink-0 ${featured ? "text-[#c7dd2b]" : "text-[#ff6048]"}`} />
           </span>
-          <span className="mt-3 block text-xs leading-5 text-[#627086]">{item.description}</span>
-          <span className="mt-4 block text-[9px] font-bold uppercase tracking-[.18em] text-[#315f95]">Microsoft official guidance</span>
+          <span className={`mt-3 block leading-6 ${featured ? "max-w-2xl text-sm text-[#c3cfdd]" : "text-xs text-[#627086]"}`}>{item.description}</span>
+          <span className={`mt-5 inline-flex items-center gap-2 text-[9px] font-bold uppercase tracking-[.18em] ${featured ? "rounded-full bg-[#c7dd2b] px-4 py-2 text-[#071a2e]" : "text-[#315f95]"}`}>
+            {item.label ?? "Open resource"}
+            {featured && <ArrowUpRight className="h-3 w-3" />}
+          </span>
         </a>
       ))}
     </div>

@@ -13,7 +13,8 @@ export type ArticleBlock =
     }
   | {
       type: "links";
-      items: Array<{ title: string; description: string; href: string }>;
+      variant?: "default" | "featured";
+      items: Array<{ title: string; description: string; href: string; label?: string }>;
     };
 
 export type ArticleSection = {
@@ -230,6 +231,27 @@ export const articles: Article[] = [
         ],
       },
       {
+        heading: "Continue with a virtual field trip",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Want to explore up close and personal? Check out the “Virtual Field Trip”.",
+          },
+          {
+            type: "links",
+            variant: "featured",
+            items: [
+              {
+                title: "Data Centers: Virtual Field Trip",
+                description: "Tour the cloud’s physical home through 16 interactive lessons covering facility design, the AI buildout, power and water, community debates, and responsible development.",
+                href: "https://drvickidatacenter.org/",
+                label: "Explore the course",
+              },
+            ],
+          },
+        ],
+      },
+      {
         heading: "Read the evidence",
         blocks: [
           {
@@ -239,21 +261,25 @@ export const articles: Article[] = [
                 title: "Energy and AI: Energy demand from AI",
                 description: "The International Energy Agency’s current global estimates for data-center electricity demand, equipment shares, and 2030 scenarios.",
                 href: "https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai",
+                label: "Official source",
               },
               {
                 title: "2024 United States Data Center Energy Usage Report",
                 description: "Lawrence Berkeley National Laboratory’s detailed modeling of U.S. electricity, water, infrastructure efficiency, and uncertainty.",
                 href: "https://eta-publications.lbl.gov/sites/default/files/2024-12/lbnl-2024-united-states-data-center-energy-usage-report_1.pdf",
+                label: "Official report",
               },
               {
                 title: "What is a data center?",
                 description: "IBM’s overview of data-center types, servers, storage, networking, power, and cloud infrastructure.",
                 href: "https://www.ibm.com/think/topics/data-centers",
+                label: "Industry explainer",
               },
               {
                 title: "Understanding water use at Microsoft datacenters",
                 description: "A provider-level explanation of outside-air, evaporative, air-cooled, and closed-loop liquid cooling approaches.",
                 href: "https://local.microsoft.com/blog/understanding-water-use-at-microsoft-datacenters/",
+                label: "Provider explainer",
               },
             ],
           },
