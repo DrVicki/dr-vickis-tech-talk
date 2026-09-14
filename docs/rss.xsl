@@ -65,6 +65,30 @@
           .rss-icon { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: .9rem; background: var(--coral); color: white; font-weight: 900; }
           .notice strong { display: block; margin-bottom: .2rem; }
           .notice p { margin: 0; color: var(--muted); font-size: .92rem; }
+          .reader-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1rem; }
+          .reader-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .55rem;
+            min-height: 2.75rem;
+            padding: .7rem 1rem;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: .75rem;
+            font-weight: 850;
+            letter-spacing: .035em;
+            transition: transform 160ms cubic-bezier(.23, 1, .32, 1), box-shadow 160ms cubic-bezier(.23, 1, .32, 1), background 160ms cubic-bezier(.23, 1, .32, 1);
+          }
+          .reader-button::before { content: "＋"; font-size: 1rem; line-height: 1; }
+          .reader-button:hover { transform: translateY(-2px); }
+          .reader-button:active { transform: scale(.97); }
+          .reader-button:focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
+          .reader-button.feedly { background: #2bb24c; color: white; box-shadow: 0 10px 24px rgba(43, 178, 76, .2); }
+          .reader-button.feedly:hover { background: #22973f; box-shadow: 0 14px 30px rgba(43, 178, 76, .28); }
+          .reader-button.inoreader { background: var(--ink); color: white; box-shadow: 0 10px 24px rgba(7, 26, 46, .17); }
+          .reader-button.inoreader:hover { background: var(--blue); box-shadow: 0 14px 30px rgba(49, 95, 149, .26); }
           .feed-bar { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin: 3.5rem 0 1rem; }
           h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 400; letter-spacing: -.04em; }
           .updated { color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; }
@@ -91,6 +115,8 @@
           @media (max-width: 620px) {
             .home-link { display: none; }
             .notice { grid-template-columns: 1fr; }
+            .reader-actions { display: grid; grid-template-columns: 1fr; }
+            .reader-button { width: 100%; }
             .feed-bar { align-items: start; flex-direction: column; }
             .post { grid-template-columns: 1fr; }
             .arrow { justify-self: start; }
@@ -120,6 +146,22 @@
               <div>
                 <strong>This is an RSS feed.</strong>
                 <p>Copy this page’s URL into an RSS reader such as Feedly, Inoreader, or NetNewsWire to receive new posts automatically. The styling is for people; the underlying XML remains available to feed apps.</p>
+                <div class="reader-actions" aria-label="Subscribe with an RSS reader">
+                  <a
+                    class="reader-button feedly"
+                    href="https://feedly.com/i/subscription/feed/https%3A%2F%2Fdrvickitechtalk.org%2Frss.xml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Subscribe to Dr. Vicki’s Tech Talk in Feedly"
+                  >Subscribe in Feedly</a>
+                  <a
+                    class="reader-button inoreader"
+                    href="https://www.inoreader.com/?add_feed=https%3A%2F%2Fdrvickitechtalk.org%2Frss.xml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Subscribe to Dr. Vicki’s Tech Talk in Inoreader"
+                  >Subscribe in Inoreader</a>
+                </div>
               </div>
             </div>
           </section>

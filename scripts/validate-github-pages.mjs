@@ -64,6 +64,9 @@ if (!bundle.includes("Copy formula") || !bundle.includes("Copy prompt")) errors.
 if (!bundle.includes("api.github.com/repos/DrVicki/dr-vickis-tech-talk/issues")) errors.push("Production bundle is missing the public solution feed");
 if (!rssXml.includes('<?xml-stylesheet type="text/xsl" href="rss.xsl"?>')) errors.push("RSS feed is missing its browser stylesheet");
 if (!rssXsl.includes("This is an RSS feed") || !rssXsl.includes('<xsl:for-each select="item">')) errors.push("RSS stylesheet is missing the feed explanation or article renderer");
+if (!rssXsl.includes("Subscribe in Feedly") || !rssXsl.includes("feedly.com/i/subscription/feed/")) errors.push("RSS stylesheet is missing the Feedly subscription button");
+if (!rssXsl.includes("Subscribe in Inoreader") || !rssXsl.includes("inoreader.com/?add_feed=")) errors.push("RSS stylesheet is missing the Inoreader subscription button");
+if (!rssXsl.includes("drvickitechtalk.org%2Frss.xml")) errors.push("RSS reader buttons are missing the canonical feed URL");
 
 try {
   await access(path.join(docs, "__manus__"));
