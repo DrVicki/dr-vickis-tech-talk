@@ -29,7 +29,7 @@ export default function SiteFooter() {
             <p className="footer-label">Stay curious</p>
             <div className="mt-4 flex flex-col gap-3 text-sm text-[#dce3ea]">
               <a href={sectionHref("newsletter")} className="footer-link flex items-center gap-2">Join the weekly brief <ArrowUpRight className="h-3.5 w-3.5" /></a>
-              <a href={`${import.meta.env.BASE_URL}rss.xml`} className="footer-link flex items-center gap-2"><Rss className="h-3.5 w-3.5" /> RSS feed</a>
+              <a href={`${import.meta.env.BASE_URL}rss.xml?v=reader-buttons`} className="footer-link flex items-center gap-2"><Rss className="h-3.5 w-3.5" /> RSS feed</a>
             </div>
           </div>
         </div>

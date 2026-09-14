@@ -129,11 +129,11 @@
       </head>
       <body>
         <header class="shell masthead">
-          <a class="brand" href="https://drvicki.github.io/dr-vickis-tech-talk/">
+          <a class="brand" href="https://drvickitechtalk.org/">
             <span class="brand-mark">V.</span>
             <span>Dr. Vicki’s Tech Talk</span>
           </a>
-          <a class="home-link" href="https://drvicki.github.io/dr-vickis-tech-talk/">Back to the blog →</a>
+          <a class="home-link" href="https://drvickitechtalk.org/">Back to the blog →</a>
         </header>
 
         <main class="shell">
