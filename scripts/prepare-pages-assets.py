@@ -7,6 +7,7 @@ TARGET.mkdir(parents=True, exist_ok=True)
 
 FILES = {
     "hero-editorial.jpg": "hero-editorial.jpg",
+    "data-center-cost-a.jpg": "data-center-cost.jpg",
     "ai-excel-formulas.jpg": "ai-excel-formulas.jpg",
     "ai-spreadsheet-analysis.jpg": "ai-spreadsheet-analysis.jpg",
     "git-time-machine.jpg": "git-time-machine.jpg",
