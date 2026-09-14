@@ -45,6 +45,8 @@ const indexHtml = await readFile(path.join(docs, "index.html"), "utf8");
 const fallbackHtml = await readFile(path.join(docs, "404.html"), "utf8");
 const guide = await readFile(path.join(root, "GITHUB_PAGES.md"), "utf8");
 const media = await readdir(path.join(docs, "assets", "media"));
+const bundlePath = indexHtml.match(/src="\/dr-vickis-tech-talk\/(assets\/index-[^"]+\.js)"/)?.[1];
+const bundle = bundlePath ? await readFile(path.join(docs, bundlePath), "utf8") : "";
 
 if (!indexHtml.includes("/dr-vickis-tech-talk/assets/")) errors.push("index.html is missing the project-aware asset base");
 if (!fallbackHtml.includes("/dr-vickis-tech-talk/assets/")) errors.push("404.html is missing the project-aware asset base");
@@ -53,6 +55,9 @@ if (fallbackHtml.includes("/manus-storage/")) errors.push("404.html still refere
 if (media.filter((file) => file.endsWith(".jpg")).length !== 8) errors.push("Expected eight optimized editorial images");
 if (!guide.includes("DrVicki/dr-vickis-tech-talk")) errors.push("Deployment guide has the wrong repository");
 if (!guide.includes("main") || !guide.includes("/docs")) errors.push("Deployment guide is missing branch-based Pages settings");
+if (!bundle.includes("formula-challenge")) errors.push("Production bundle is missing the public formula challenge");
+if (!bundle.includes("Copy formula") || !bundle.includes("Copy prompt")) errors.push("Production bundle is missing formula or prompt copy controls");
+if (!bundle.includes("api.github.com/repos/DrVicki/dr-vickis-tech-talk/issues")) errors.push("Production bundle is missing the public solution feed");
 
 try {
   await access(path.join(docs, "__manus__"));

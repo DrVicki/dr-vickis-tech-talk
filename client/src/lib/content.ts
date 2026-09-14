@@ -54,7 +54,7 @@ export const articles: Article[] = [
       "The hard part is often not knowing the result you want. It is remembering the exact syntax—and catching the quiet ways a plausible formula can be wrong.",
     category: "AI",
     date: "September 11, 2026",
-    readTime: "13 min read",
+    readTime: "17 min read",
     image: assetUrl("ai-excel-formulas.jpg", "/manus-storage/ai-excel-formulas_6581e59d.jpg"),
     imageAlt: "Editorial collage showing a plain-language calculation becoming a tested spreadsheet formula",
     accent: "coral",

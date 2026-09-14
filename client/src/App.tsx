@@ -22,8 +22,16 @@ function ScrollManager() {
     const scrollToAnchor = () => {
       document.querySelector(hash)?.scrollIntoView({ block: "start" });
     };
-    const frame = window.requestAnimationFrame(scrollToAnchor);
-    return () => window.cancelAnimationFrame(frame);
+    let secondFrame = 0;
+    const frame = window.requestAnimationFrame(() => {
+      secondFrame = window.requestAnimationFrame(scrollToAnchor);
+    });
+    const settledScroll = window.setTimeout(scrollToAnchor, 120);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.cancelAnimationFrame(secondFrame);
+      window.clearTimeout(settledScroll);
+    };
   }, [location]);
 
   return null;
