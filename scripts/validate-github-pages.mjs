@@ -62,11 +62,13 @@ if (!guide.includes("main") || !guide.includes("/docs")) errors.push("Deployment
 if (!bundle.includes("formula-challenge")) errors.push("Production bundle is missing the public formula challenge");
 if (!bundle.includes("Copy formula") || !bundle.includes("Copy prompt")) errors.push("Production bundle is missing formula or prompt copy controls");
 if (!bundle.includes("api.github.com/repos/DrVicki/dr-vickis-tech-talk/issues")) errors.push("Production bundle is missing the public solution feed");
-if (!rssXml.includes('<?xml-stylesheet type="text/xsl" href="rss.xsl?v=reader-buttons"?>')) errors.push("RSS feed is missing its versioned browser stylesheet");
+if (!rssXml.includes('<?xml-stylesheet type="text/xsl" href="rss.xsl?v=beginner-guide"?>')) errors.push("RSS feed is missing its versioned browser stylesheet");
 if (!rssXsl.includes("This is an RSS feed") || !rssXsl.includes('<xsl:for-each select="item">')) errors.push("RSS stylesheet is missing the feed explanation or article renderer");
 if (!rssXsl.includes("Subscribe in Feedly") || !rssXsl.includes("feedly.com/i/subscription/feed/")) errors.push("RSS stylesheet is missing the Feedly subscription button");
 if (!rssXsl.includes("Subscribe in Inoreader") || !rssXsl.includes("inoreader.com/?add_feed=")) errors.push("RSS stylesheet is missing the Inoreader subscription button");
 if (!rssXsl.includes("drvickitechtalk.org%2Frss.xml")) errors.push("RSS reader buttons are missing the canonical feed URL");
+if (!rssXsl.includes("RSS in three easy steps") || !rssXsl.includes("Choose a reader") || !rssXsl.includes("Subscribe once") || !rssXsl.includes("Read on your terms")) errors.push("RSS stylesheet is missing the three-step beginner guide");
+if (!rssXsl.includes("RSS is different from an email newsletter")) errors.push("RSS beginner guide is missing the newsletter distinction");
 
 try {
   await access(path.join(docs, "__manus__"));

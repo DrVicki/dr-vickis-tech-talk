@@ -89,6 +89,35 @@
           .reader-button.feedly:hover { background: #22973f; box-shadow: 0 14px 30px rgba(43, 178, 76, .28); }
           .reader-button.inoreader { background: var(--ink); color: white; box-shadow: 0 10px 24px rgba(7, 26, 46, .17); }
           .reader-button.inoreader:hover { background: var(--blue); box-shadow: 0 14px 30px rgba(49, 95, 149, .26); }
+          .quick-start {
+            margin: 0 0 5rem;
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            border-radius: 1.6rem;
+            background: var(--ink);
+            color: white;
+            box-shadow: 0 24px 60px rgba(7, 26, 46, .17);
+          }
+          .guide-label { color: var(--lime); font-size: .68rem; font-weight: 850; letter-spacing: .2em; text-transform: uppercase; }
+          .guide-heading { max-width: 760px; margin: .55rem 0 0; color: white; }
+          .guide-intro { max-width: 750px; margin: .65rem 0 0; color: #b9c6d5; font-size: .95rem; }
+          .steps {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1px;
+            margin: 2rem 0 0;
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .13);
+            border-radius: 1.2rem;
+            background: rgba(255, 255, 255, .13);
+            list-style: none;
+          }
+          .step { padding: 1.35rem; background: #0d2743; }
+          .step-number { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--lime); color: var(--ink); font-size: .75rem; font-weight: 900; }
+          .step h3 { margin: .85rem 0 .4rem; font-family: Georgia, "Times New Roman", serif; font-size: 1.35rem; line-height: 1.1; }
+          .step p { margin: 0; color: #b9c6d5; font-size: .84rem; line-height: 1.65; }
+          .guide-note { margin: 1.4rem 0 0; padding-top: 1.2rem; border-top: 1px solid rgba(255, 255, 255, .13); color: #b9c6d5; font-size: .82rem; }
+          .guide-note strong { color: white; }
           .feed-bar { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin: 3.5rem 0 1rem; }
           h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 400; letter-spacing: -.04em; }
           .updated { color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; }
@@ -117,6 +146,8 @@
             .notice { grid-template-columns: 1fr; }
             .reader-actions { display: grid; grid-template-columns: 1fr; }
             .reader-button { width: 100%; }
+            .quick-start { margin-bottom: 4rem; }
+            .steps { grid-template-columns: 1fr; }
             .feed-bar { align-items: start; flex-direction: column; }
             .post { grid-template-columns: 1fr; }
             .arrow { justify-self: start; }
@@ -164,6 +195,30 @@
                 </div>
               </div>
             </div>
+          </section>
+
+          <section class="quick-start" aria-labelledby="rss-guide-title">
+            <div class="guide-label">New to RSS? Start here.</div>
+            <h2 class="guide-heading" id="rss-guide-title">RSS in three easy steps</h2>
+            <p class="guide-intro">RSS brings updates from websites you choose into one reading app—without relying on a social-media algorithm.</p>
+            <ol class="steps">
+              <li class="step">
+                <span class="step-number" aria-hidden="true">1</span>
+                <h3>Choose a reader</h3>
+                <p>An RSS reader is like an inbox for websites. Feedly and Inoreader are two popular options; use either button above.</p>
+              </li>
+              <li class="step">
+                <span class="step-number" aria-hidden="true">2</span>
+                <h3>Subscribe once</h3>
+                <p>Sign in if asked, then follow Dr. Vicki’s Tech Talk. The reader saves this feed to your personal list.</p>
+              </li>
+              <li class="step">
+                <span class="step-number" aria-hidden="true">3</span>
+                <h3>Read on your terms</h3>
+                <p>Open your reader whenever you like. New posts appear automatically, and you can unfollow at any time.</p>
+              </li>
+            </ol>
+            <p class="guide-note"><strong>Good to know:</strong> RSS is different from an email newsletter. Nothing is sent to your inbox, and following this feed does not create an account on this blog.</p>
           </section>
 
           <div class="feed-bar">
