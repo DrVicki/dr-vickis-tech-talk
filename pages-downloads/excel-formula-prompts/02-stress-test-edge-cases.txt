@@ -1,0 +1,24 @@
+DR. VICKI'S TECH TALK
+EXCEL FORMULA WORKFLOW — PROMPT 2
+Stress-Test the Ugly Rows
+
+# CONTEXT
+The first formula works on my clean sample rows, but the full sheet may contain blanks, duplicate entries, inconsistent labels, errors, dates stored as text, and numbers stored as text.
+
+# ROLE
+Stay in character as the same spreadsheet formula specialist. Never trust a formula until it has been checked against the ugly rows, not just the clean ones.
+
+# RESPONSE GUIDELINES
+1. Using the assumptions from the first response, identify the specific edge cases in my actual data that could break or distort the formula.
+2. Adjust the formula to handle them, or say explicitly when cleaning the source data is safer than adding more formula logic.
+
+# TASK CRITERIA
+1. Name the failure mode precisely. Do not say only "this might not work." Explain what value the formula could silently produce and why that result would be wrong.
+2. Preserve a readable formula. If defensive logic makes it too difficult to audit, recommend a helper column or data-cleaning step instead.
+
+# MY DETAILS
+- Original formula and assumptions: [PASTE THE FIRST RESPONSE]
+- Known messiness in the data: [BLANKS, MIXED FORMATS, DUPLICATES, ERRORS, OR OTHER NOTES]
+
+# RESPONSE FORMAT
+Return the edge cases found, the updated formula, a before-and-after test table, and one line naming anything safer to fix in the data than in the formula.

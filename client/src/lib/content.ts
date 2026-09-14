@@ -2,7 +2,19 @@ export type ArticleBlock =
   | { type: "paragraph"; text: string }
   | { type: "code"; code: string; language?: string }
   | { type: "list"; items: string[] }
-  | { type: "tip"; text: string };
+  | { type: "tip"; text: string }
+  | {
+      type: "dataset";
+      caption: string;
+      headers: string[];
+      rows: string[][];
+      formula: string;
+      note: string;
+    }
+  | {
+      type: "links";
+      items: Array<{ title: string; description: string; href: string }>;
+    };
 
 export type ArticleSection = {
   heading: string;
@@ -42,7 +54,7 @@ export const articles: Article[] = [
       "The hard part is often not knowing the result you want. It is remembering the exact syntax—and catching the quiet ways a plausible formula can be wrong.",
     category: "AI",
     date: "September 11, 2026",
-    readTime: "8 min read",
+    readTime: "13 min read",
     image: assetUrl("ai-excel-formulas.jpg", "/manus-storage/ai-excel-formulas_6581e59d.jpg"),
     imageAlt: "Editorial collage showing a plain-language calculation becoming a tested spreadsheet formula",
     accent: "coral",
@@ -136,6 +148,86 @@ export const articles: Article[] = [
         ],
       },
       {
+        heading: "Practice lab 1: Guard a profit-margin formula",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Start with a familiar calculation and make the failure rules explicit. Profit margin is `(Revenue - Cost) / Revenue`, but a production-ready version must decide what to do when revenue is zero or either input is blank.",
+          },
+          {
+            type: "dataset",
+            caption: "Fictional product-margin test data",
+            headers: ["Product", "Revenue", "Cost", "Expected margin"],
+            rows: [
+              ["Aster", "$1,200", "$720", "40.0%"],
+              ["Beacon", "$0", "$100", "blank"],
+              ["Cedar", "$900", "blank", "blank"],
+              ["Delta", "$1,000", "$1,000", "0.0%"],
+              ["Echo", "$800", "$920", "−15.0%"],
+            ],
+            formula: '=IF(OR(B2="",C2="",B2=0),"",(B2-C2)/B2)',
+            note: "The order of the guardrail matters: test missing inputs and zero revenue before dividing. Format the result as a percentage, then fill down.",
+          },
+          {
+            type: "tip",
+            text: "Practice prompt: “Write an Excel formula for profit margin using revenue in B2 and cost in C2. Return blank when either input is blank or revenue is zero. Explain each test before giving the formula.”",
+          },
+        ],
+      },
+      {
+        heading: "Practice lab 2: Normalize a lookup key",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "A lookup can fail even when the value looks right on screen. This lab trims accidental spaces, normalizes capitalization, and returns a visible label when the SKU is not in the reference table.",
+          },
+          {
+            type: "dataset",
+            caption: "Fictional messy-SKU test data",
+            headers: ["Raw SKU", "Lookup table", "Expected product"],
+            rows: [
+              ["␠ab-101␠", "AB-101 → Widget", "Widget"],
+              ["CD-205", "CD-205 → Cable", "Cable"],
+              ["ef-310", "EF-310 → Adapter", "Adapter"],
+              ["XX-999", "no match", "Not found"],
+            ],
+            formula: '=IFERROR(XLOOKUP(UPPER(TRIM(A2)),$F$2:$F$4,$G$2:$G$4),"Not found")',
+            note: "`TRIM` removes leading and trailing spaces, `UPPER` normalizes case, and `IFERROR` turns a missing key into an explicit outcome rather than a silent blank.",
+          },
+          {
+            type: "tip",
+            text: "Practice prompt: “Look up the SKU in A2 against F2:F4 and return the product from G2:G4. Ignore extra spaces and capitalization. Return ‘Not found’ when there is no match.”",
+          },
+        ],
+      },
+      {
+        heading: "Practice lab 3: Apply invoice-status rules in order",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Nested logic becomes safer when you state the priority before the syntax: a paid invoice is always Paid; an unpaid invoice without a due date needs attention; everything else is Overdue, Due today, or Open relative to the evaluation date.",
+          },
+          {
+            type: "dataset",
+            caption: "Fictional invoice-status test data — evaluation date September 13, 2026",
+            headers: ["Invoice", "Due date", "Paid?", "Expected status"],
+            rows: [
+              ["INV-1001", "Sep 5, 2026", "Yes", "Paid"],
+              ["INV-1002", "Sep 10, 2026", "No", "Overdue"],
+              ["INV-1003", "Sep 20, 2026", "No", "Open"],
+              ["INV-1004", "blank", "No", "Needs due date"],
+              ["INV-1005", "Sep 13, 2026", "No", "Due today"],
+            ],
+            formula: '=IF(C2="Yes","Paid",IF(B2="","Needs due date",IF(B2<$H$2,"Overdue",IF(B2=$H$2,"Due today","Open"))))',
+            note: "Store the evaluation date in `H2`. Checking Paid first prevents an old but completed invoice from being labeled Overdue; checking blank dates next prevents an empty cell from being compared as a date.",
+          },
+          {
+            type: "tip",
+            text: "Practice prompt: “Write one Excel formula that applies these invoice rules in priority order. Use Paid? in C2, Due date in B2, and the evaluation date in H2. Explain why the order changes the answer.”",
+          },
+        ],
+      },
+      {
         heading: "What to test before you trust the result",
         blocks: [
           {
@@ -156,6 +248,40 @@ export const articles: Article[] = [
           {
             type: "tip",
             text: "Do not hide every error with IFERROR. Decide whether an error should become zero, blank, a warning label, or a visible problem that someone must fix.",
+          },
+        ],
+      },
+      {
+        heading: "Official Microsoft guidance",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Microsoft’s current guidance separates two ideas that are easy to confuse. Copilot in Excel can generate and explain native Excel formulas from natural-language requests. The separate `COPILOT()` worksheet function was designed for semantic or generative tasks—not deterministic numerical calculations—and Microsoft says it will no longer be available starting September 14, 2026.",
+          },
+          {
+            type: "links",
+            items: [
+              {
+                title: "Get started with Copilot in Excel",
+                description: "Microsoft’s overview of edit, plan, and chat modes; formulas, charts, PivotTables, insights, availability, and licensing.",
+                href: "https://support.microsoft.com/en-us/excel/copilot/get-started-with-copilot-in-excel",
+              },
+              {
+                title: "Get data insights with Copilot in Excel",
+                description: "Official examples for formula columns, single-cell formulas, lookups, formula explanations, summaries, trends, and outliers.",
+                href: "https://support.microsoft.com/en-us/excel/copilot/data-insights-with-copilot-in-excel",
+              },
+              {
+                title: "Write formulas with natural language",
+                description: "Microsoft’s on-grid workflow for describing a calculation, previewing the suggested formula, and keeping or discarding it.",
+                href: "https://techcommunity.microsoft.com/blog/excelblog/write-formulas-with-natural-language-using-copilot-in-excel/4474618",
+              },
+              {
+                title: "COPILOT function reference and limitations",
+                description: "The separate worksheet function, its intended semantic uses, and Microsoft’s warning not to use it for accurate, reproducible calculations.",
+                href: "https://support.microsoft.com/en-us/excel/functions/copilot-function",
+              },
+            ],
           },
         ],
       },

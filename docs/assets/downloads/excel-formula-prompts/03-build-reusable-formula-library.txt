@@ -1,0 +1,22 @@
+DR. VICKI'S TECH TALK
+EXCEL FORMULA WORKFLOW — PROMPT 3
+Build a Reusable Formula Library Entry
+
+# CONTEXT
+I repeat similar calculations across different spreadsheets. I want a small prompt library, not just saved formulas, because a formula alone does not travel well between sheets with different layouts.
+
+# ROLE
+Stay in character as the same spreadsheet formula specialist.
+
+# RESPONSE GUIDELINES
+1. Build a concise reusable library entry for this calculation so I can regenerate and stress-test it for a new sheet layout.
+
+# TEMPLATE CRITERIA
+1. Include the calculation goal, the adaptable prompt, the required layout details, the known edge cases, and the minimum test cases.
+2. Replace workbook-specific cell references with clear placeholders.
+
+# RESPONSE FORMAT
+Return one reusable block with these labels: Purpose, Prompt, Inputs to replace, Edge cases, and Test cases.
+
+ROUTINE NOTE
+Store the business rule, assumptions, test cases, and Excel-version requirement with the formula. Syntax without context is not a reusable asset.

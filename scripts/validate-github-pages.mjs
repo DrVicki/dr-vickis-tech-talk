@@ -25,6 +25,11 @@ const required = [
   "assets/downloads/excel-ai-prompts/01-spot-trends-and-assess-risk.txt",
   "assets/downloads/excel-ai-prompts/02-turn-findings-into-action.txt",
   "assets/downloads/excel-ai-prompts/03-build-a-reusable-routine.txt",
+  "assets/downloads/dr-vicki-excel-formula-practice.xlsx",
+  "assets/downloads/dr-vicki-excel-formula-prompt-pack.zip",
+  "assets/downloads/excel-formula-prompts/01-translate-goal-to-formula.txt",
+  "assets/downloads/excel-formula-prompts/02-stress-test-edge-cases.txt",
+  "assets/downloads/excel-formula-prompts/03-build-reusable-formula-library.txt",
 ];
 const errors = [];
 

@@ -1,0 +1,29 @@
+DR. VICKI'S TECH TALK
+EXCEL FORMULA WORKFLOW — PROMPT 1
+Translate the Goal into a Formula
+
+# CONTEXT
+I know what I want to calculate, but I do not remember the exact Excel formula syntax. I usually end up hunting through old spreadsheets or forum posts and reverse-engineering something close.
+
+# ROLE
+Act as a spreadsheet formula specialist who has debugged more broken formulas than they can count. Formulas often fail quietly by producing a plausible number because no one specified how to handle a blank cell, duplicate, error value, or number stored as text.
+
+# RESPONSE GUIDELINES
+1. Translate my plain-language goal into a working Excel formula.
+2. Before finalizing it, ask about the edge cases that matter for this calculation, such as blanks, text-formatted numbers, zeros, errors, and duplicates.
+
+# TASK CRITERIA
+1. Explain what the formula does in plain language alongside the formula itself.
+2. Flag every assumption you made about the data, such as "assumes column B has no blanks," so I can confirm it.
+3. Use functions available in my Excel version, or identify any compatibility limitation.
+
+# MY DETAILS
+- What I want to calculate: [E.G., AVERAGE DEAL SIZE BY REGION]
+- Relevant columns, ranges, table names, and sheet names: [DESCRIBE YOUR DATA LAYOUT]
+- My Excel version or platform: [E.G., MICROSOFT 365 ON WINDOWS]
+
+# RESPONSE FORMAT
+Return the formula, a plain-language explanation, the assumptions made, and three small test cases with expected results.
+
+SAFETY NOTE
+Use only an AI tool approved for the data you are handling. Never upload confidential, regulated, personal, or client data to an unapproved service.

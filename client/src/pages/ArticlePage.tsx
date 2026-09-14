@@ -6,6 +6,7 @@ import {
   Clock,
   Copy,
   Download,
+  ExternalLink,
   Facebook,
   FileSpreadsheet,
   FileText,
@@ -15,6 +16,7 @@ import {
   Package,
   Quote,
   Share2,
+  Table2,
   Terminal,
 } from "lucide-react";
 import { Link } from "wouter";
@@ -25,6 +27,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 const EXCEL_ARTICLE_SLUG = "working-with-excel-data-without-formulas";
+const FORMULA_ARTICLE_SLUG = "how-to-let-ai-write-excel-formulas-for-you";
 
 const downloadUrl = (fileName: string, storagePath: string) =>
   import.meta.env.VITE_USE_LOCAL_ASSETS === "true"
@@ -69,6 +72,49 @@ const excelDownloads = {
       href: downloadUrl(
         "excel-ai-prompts/03-build-a-reusable-routine.txt",
         "/manus-storage/03-build-a-reusable-routine_d294dc9a.txt",
+      ),
+    },
+  ],
+};
+
+const formulaDownloads = {
+  workbook: downloadUrl(
+    "dr-vicki-excel-formula-practice.xlsx",
+    "/manus-storage/dr-vicki-excel-formula-practice_9be279f3.xlsx",
+  ),
+  promptPack: downloadUrl(
+    "dr-vicki-excel-formula-prompt-pack.zip",
+    "/manus-storage/dr-vicki-excel-formula-prompt-pack_ae8fe2d2.zip",
+  ),
+  prompts: [
+    {
+      label: "Prompt 1",
+      title: "Translate goal to formula",
+      description: "Turn a plain-language calculation into compatible Excel syntax with explicit assumptions.",
+      fileName: "01-translate-goal-to-formula.txt",
+      href: downloadUrl(
+        "excel-formula-prompts/01-translate-goal-to-formula.txt",
+        "/manus-storage/01-translate-goal-to-formula_c0a1d330.txt",
+      ),
+    },
+    {
+      label: "Prompt 2",
+      title: "Stress-test edge cases",
+      description: "Probe blanks, zeros, errors, duplicates, mixed formats, and silent failure modes.",
+      fileName: "02-stress-test-edge-cases.txt",
+      href: downloadUrl(
+        "excel-formula-prompts/02-stress-test-edge-cases.txt",
+        "/manus-storage/02-stress-test-edge-cases_0e73d31e.txt",
+      ),
+    },
+    {
+      label: "Prompt 3",
+      title: "Build a reusable library",
+      description: "Save the business rule, placeholders, assumptions, and minimum tests with the formula.",
+      fileName: "03-build-reusable-formula-library.txt",
+      href: downloadUrl(
+        "excel-formula-prompts/03-build-reusable-formula-library.txt",
+        "/manus-storage/03-build-reusable-formula-library_9d7c55ec.txt",
       ),
     },
   ],
@@ -138,6 +184,63 @@ function CodeBlock({ code, language = "Code" }: { code: string; language?: strin
   );
 }
 
+function DatasetBlock({ block }: { block: Extract<ArticleBlock, { type: "dataset" }> }) {
+  return (
+    <div className="my-8 overflow-hidden rounded-[22px] border border-[#132841]/12 bg-[#fffaf1] shadow-[0_18px_55px_rgba(7,26,46,.08)]">
+      <div className="flex items-center gap-3 border-b border-[#132841]/10 bg-[#071a2e] px-5 py-4 text-white sm:px-6">
+        <span className="grid h-8 w-8 place-items-center rounded-full bg-[#c7dd2b] text-[#071a2e]"><Table2 className="h-4 w-4" /></span>
+        <span className="text-[10px] font-bold uppercase tracking-[.18em] text-[#dbe4ee]">{block.caption}</span>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[560px] border-collapse text-left text-xs sm:text-sm">
+          <thead>
+            <tr className="bg-[#dce8f4] text-[#071a2e]">
+              {block.headers.map((header) => <th key={header} className="border-b border-[#132841]/12 px-4 py-3 font-bold sm:px-5">{header}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {block.rows.map((row, rowIndex) => (
+              <tr key={`${block.caption}-${rowIndex}`} className={rowIndex % 2 === 0 ? "bg-white/60" : "bg-[#f2ede3]"}>
+                {row.map((cell, cellIndex) => <td key={`${cell}-${cellIndex}`} className="border-b border-[#132841]/8 px-4 py-3 font-medium text-[#445267] sm:px-5">{cell}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="px-4 pb-5 sm:px-6 sm:pb-6">
+        <CodeBlock code={block.formula} language="Excel formula" />
+        <div className="-mt-2 flex items-start gap-2 text-xs leading-5 text-[#627086]">
+          <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#315f95]" />
+          <span>{formatInline(block.note)}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ResourceLinks({ block }: { block: Extract<ArticleBlock, { type: "links" }> }) {
+  return (
+    <div className="my-8 grid gap-3 sm:grid-cols-2">
+      {block.items.map((item) => (
+        <a
+          key={item.href}
+          href={item.href}
+          target="_blank"
+          rel="noreferrer"
+          className="group rounded-[18px] border border-[#132841]/12 bg-[#fffaf1] p-5 shadow-[0_12px_35px_rgba(7,26,46,.06)] transition hover:-translate-y-0.5 hover:border-[#315f95]/40 hover:shadow-[0_18px_45px_rgba(7,26,46,.11)]"
+        >
+          <span className="flex items-start justify-between gap-4">
+            <span className="font-display text-xl font-semibold leading-tight text-[#071a2e] group-hover:text-[#315f95]">{item.title}</span>
+            <ExternalLink className="mt-0.5 h-4 w-4 shrink-0 text-[#ff6048]" />
+          </span>
+          <span className="mt-3 block text-xs leading-5 text-[#627086]">{item.description}</span>
+          <span className="mt-4 block text-[9px] font-bold uppercase tracking-[.18em] text-[#315f95]">Microsoft official guidance</span>
+        </a>
+      ))}
+    </div>
+  );
+}
+
 function ArticleContentBlock({ block }: { block: ArticleBlock }) {
   if (block.type === "paragraph") {
     return <p>{formatInline(block.text)}</p>;
@@ -151,6 +254,12 @@ function ArticleContentBlock({ block }: { block: ArticleBlock }) {
         {block.items.map((item) => <li key={item}>{formatInline(item)}</li>)}
       </ul>
     );
+  }
+  if (block.type === "dataset") {
+    return <DatasetBlock block={block} />;
+  }
+  if (block.type === "links") {
+    return <ResourceLinks block={block} />;
   }
   return (
     <div className="article-tip">
@@ -234,6 +343,78 @@ function ExcelDownloadToolkit() {
         <p className="mt-6 flex items-start gap-2 text-[10px] leading-4 text-[#8296aa]">
           <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#c7dd2b]" />
           Built for Microsoft Excel, but the prompt templates also work with other approved AI tools that can analyze spreadsheet data.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function FormulaDownloadToolkit() {
+  return (
+    <div id="downloads" role="region" className="download-toolkit scroll-mt-28" aria-labelledby="formula-downloads-heading">
+      <div className="download-toolkit-glow" aria-hidden="true" />
+      <div className="relative z-10">
+        <div className="flex flex-wrap items-start justify-between gap-5">
+          <div className="max-w-xl">
+            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#c7dd2b]">Download and practice</p>
+            <h2 id="formula-downloads-heading" className="mt-4 font-display text-4xl font-medium leading-[.95] text-white sm:text-5xl">
+              Put the formula workflow on your desk.
+            </h2>
+            <p className="mt-5 max-w-lg text-sm leading-6 text-[#b8c7d7]">
+              Download the three editable prompts, then work through fictional margin, lookup, and invoice-status datasets in the companion workbook.
+            </p>
+          </div>
+          <span className="rounded-full border border-white/15 bg-white/8 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.16em] text-[#dfe8f1]">
+            5 files · practice-ready
+          </span>
+        </div>
+
+        <div className="mt-9 grid gap-4 sm:grid-cols-2">
+          <a href={formulaDownloads.workbook} download="dr-vicki-excel-formula-practice.xlsx" className="download-feature-card group">
+            <span className="download-feature-icon"><FileSpreadsheet className="h-6 w-6" /></span>
+            <span className="min-w-0">
+              <span className="block text-[10px] font-bold uppercase tracking-[.18em] text-[#c7dd2b]">Practice workbook · .xlsx</span>
+              <span className="mt-2 block font-display text-2xl font-medium leading-tight text-white">Three formula labs + answer key</span>
+              <span className="mt-2 block text-xs leading-5 text-[#aebfd0]">Five formatted sheets with fictional datasets, yellow work areas, reference results, and automatic match checks.</span>
+            </span>
+            <Download className="ml-auto h-5 w-5 shrink-0 text-[#c7dd2b] transition-transform group-hover:translate-y-0.5" />
+          </a>
+
+          <a href={formulaDownloads.promptPack} download="dr-vicki-excel-formula-prompt-pack.zip" className="download-feature-card group">
+            <span className="download-feature-icon"><Package className="h-6 w-6" /></span>
+            <span className="min-w-0">
+              <span className="block text-[10px] font-bold uppercase tracking-[.18em] text-[#ff806b]">Complete prompt pack · .zip</span>
+              <span className="mt-2 block font-display text-2xl font-medium leading-tight text-white">Translate, test, and save</span>
+              <span className="mt-2 block text-xs leading-5 text-[#aebfd0]">Three plain-text templates plus a guide to the formula-first sequence and its human checkpoints.</span>
+            </span>
+            <Download className="ml-auto h-5 w-5 shrink-0 text-[#ff806b] transition-transform group-hover:translate-y-0.5" />
+          </a>
+        </div>
+
+        <div className="mt-7 flex items-center gap-3">
+          <span className="h-px flex-1 bg-white/12" />
+          <span className="text-[9px] font-bold uppercase tracking-[.18em] text-[#8296aa]">Or download one prompt</span>
+          <span className="h-px flex-1 bg-white/12" />
+        </div>
+
+        <div className="mt-5 grid gap-3 md:grid-cols-3">
+          {formulaDownloads.prompts.map((prompt) => (
+            <a key={prompt.fileName} href={prompt.href} download={prompt.fileName} className="download-prompt-card group">
+              <span className="flex items-center justify-between gap-4">
+                <span className="inline-flex items-center gap-2 text-[9px] font-bold uppercase tracking-[.18em] text-[#8fa2b7]">
+                  <FileText className="h-3.5 w-3.5 text-[#c7dd2b]" /> {prompt.label} · .txt
+                </span>
+                <Download className="h-4 w-4 text-[#8fa2b7] transition group-hover:text-[#c7dd2b]" />
+              </span>
+              <span className="mt-4 block font-display text-xl font-medium leading-tight text-white">{prompt.title}</span>
+              <span className="mt-2 block text-[11px] leading-5 text-[#9fb0c1]">{prompt.description}</span>
+            </a>
+          ))}
+        </div>
+
+        <p className="mt-6 flex items-start gap-2 text-[10px] leading-4 text-[#8296aa]">
+          <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#c7dd2b]" />
+          The workbook uses fictional data. Use only an approved AI tool when you move from practice to real organizational data.
         </p>
       </div>
     </div>
@@ -353,6 +534,8 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
   const related = articles.filter((item) => item.slug !== article.slug).slice(0, 2);
   const hasExcelToolkit = article.slug === EXCEL_ARTICLE_SLUG;
+  const hasFormulaToolkit = article.slug === FORMULA_ARTICLE_SLUG;
+  const hasDownloadToolkit = hasExcelToolkit || hasFormulaToolkit;
 
   return (
     <div className="min-h-screen bg-[#f8f3e8] text-[#071a2e]">
@@ -382,7 +565,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#7b8796]">In this note</p>
               <ol className="mt-5 space-y-4 border-l border-[#132841]/15 pl-4 text-xs font-semibold leading-5 text-[#627086]">
                 {article.sections.map((section, index) => <li key={section.heading}><a href={`#section-${index + 1}`} className="transition hover:text-[#315f95]">{section.heading}</a></li>)}
-                {hasExcelToolkit && <li><a href="#downloads" className="font-bold text-[#315f95] transition hover:text-[#ff6048]">Download the toolkit</a></li>}
+                {hasDownloadToolkit && <li><a href="#downloads" className="font-bold text-[#315f95] transition hover:text-[#ff6048]">Download the toolkit</a></li>}
               </ol>
             </div>
           </aside>
@@ -402,6 +585,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               </section>
             ))}
             {hasExcelToolkit && <ExcelDownloadToolkit />}
+            {hasFormulaToolkit && <FormulaDownloadToolkit />}
           </div>
 
           <aside>
