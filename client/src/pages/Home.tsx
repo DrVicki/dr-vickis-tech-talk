@@ -134,7 +134,7 @@ export default function Home() {
                     <article key={article.slug} className={`article-card group ${index === 0 && activeTopic === "All" ? "md:col-span-2" : ""}`}>
                       <Link href={`/post/${article.slug}`} className="block">
                         <div className={`relative overflow-hidden rounded-[22px] ${index === 0 && activeTopic === "All" ? "aspect-[16/8]" : "aspect-[4/3]"}`}>
-                          <img src={article.image} alt={article.imageAlt} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />
+                          <img src={article.image} alt={article.imageAlt} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#071a2e]/35 to-transparent opacity-30" />
                           <span className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-[#f8f3e8]/90 text-[#071a2e] opacity-0 shadow-lg backdrop-blur transition duration-200 group-hover:rotate-3 group-hover:opacity-100"><ArrowUpRight className="h-4 w-4" /></span>
                         </div>
