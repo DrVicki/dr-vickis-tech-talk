@@ -22,6 +22,9 @@ const pagesHero = `${projectPath}assets/media/hero-editorial.jpg`;
 const indexHtml = (await readFile(indexPath, "utf8")).replaceAll(storageHero, pagesHero);
 const routeEntries = [
   "about",
+  "post/the-ai-advantage-learning-ai-for-todays-workforce",
+  "post/beyond-the-resume-build-a-living-digital-portfolio",
+  "post/the-hidden-cost-of-the-hiring-treadmill",
   "post/the-real-cost-of-a-click-understanding-data-centers",
   "post/how-to-let-ai-write-excel-formulas-for-you",
   "post/working-with-excel-data-without-formulas",

@@ -1,4 +1,5 @@
 from pathlib import Path
+from shutil import copyfile
 from PIL import Image
 
 SOURCE = Path("/home/ubuntu/webdev-static-assets/dr-vickis-tech-talk")
@@ -28,3 +29,8 @@ for source_name, target_name in FILES.items():
         image.thumbnail((1600, 1200), Image.Resampling.LANCZOS)
         image.save(target_path, "JPEG", quality=82, optimize=True, progressive=True)
         print(f"Prepared {target_path.name}: {image.width}x{image.height}, {target_path.stat().st_size} bytes")
+
+# These source assets are already optimized; preserve their pixels and PNG transparency.
+for name in ("skillsphere-digital-portfolio.jpg", "skillsphere-upskilling.jpg", "skillsphere-ai-advantage.jpg", "skillsphere-portfolio-preview.png", "skillsphere-signature.png"):
+    copyfile(SOURCE / name, TARGET / name)
+    print(f"Preserved {name}")

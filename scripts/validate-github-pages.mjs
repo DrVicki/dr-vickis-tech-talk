@@ -11,6 +11,14 @@ const required = [
   "rss.xml",
   "rss.xsl",
   "about/index.html",
+  "post/the-ai-advantage-learning-ai-for-todays-workforce/index.html",
+  "post/beyond-the-resume-build-a-living-digital-portfolio/index.html",
+  "post/the-hidden-cost-of-the-hiring-treadmill/index.html",
+  "assets/media/skillsphere-digital-portfolio.jpg",
+  "assets/media/skillsphere-upskilling.jpg",
+  "assets/media/skillsphere-ai-advantage.jpg",
+  "assets/media/skillsphere-portfolio-preview.png",
+  "assets/media/skillsphere-signature.png",
   "post/the-real-cost-of-a-click-understanding-data-centers/index.html",
   "post/how-to-let-ai-write-excel-formulas-for-you/index.html",
   "post/working-with-excel-data-without-formulas/index.html",
@@ -56,7 +64,10 @@ if (!indexHtml.includes("/dr-vickis-tech-talk/assets/")) errors.push("index.html
 if (!fallbackHtml.includes("/dr-vickis-tech-talk/assets/")) errors.push("404.html is missing the project-aware asset base");
 if (indexHtml.includes("/manus-storage/")) errors.push("index.html still references Manus-only storage");
 if (fallbackHtml.includes("/manus-storage/")) errors.push("404.html still references Manus-only storage");
-if (media.filter((file) => file.endsWith(".jpg")).length !== 9) errors.push("Expected nine optimized editorial images");
+if (media.filter((file) => file.endsWith(".jpg")).length !== 12) errors.push("Expected twelve optimized cover images");
+for (const slug of ["the-ai-advantage-learning-ai-for-todays-workforce", "beyond-the-resume-build-a-living-digital-portfolio", "the-hidden-cost-of-the-hiring-treadmill"]) {
+  if (!bundle.includes(slug) || !rssXml.includes(slug)) errors.push(`Missing imported post in site or RSS: ${slug}`);
+}
 if (!guide.includes("DrVicki/dr-vickis-tech-talk")) errors.push("Deployment guide has the wrong repository");
 if (!guide.includes("main") || !guide.includes("/docs")) errors.push("Deployment guide is missing branch-based Pages settings");
 if (!bundle.includes("formula-challenge")) errors.push("Production bundle is missing the public formula challenge");

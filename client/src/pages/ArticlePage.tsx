@@ -156,7 +156,11 @@ const formulaDownloads = {
 };
 
 function formatInline(text: string): ReactNode[] {
-  return text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).map((part, index) => {
+  return text.split(/(\[(?:[^\[\]]|\[[^\]]*\])+\]\(https?:\/\/[^)\s]+\)|`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*)/g).map((part, index) => {
+    const link = part.match(/^\[((?:[^\[\]]|\[[^\]]*\])+)\]\((https?:\/\/[^)\s]+)\)$/);
+    if (link) {
+      return <a key={`${part}-${index}`} href={link[2]} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#315f95] underline decoration-[#315f95]/40 underline-offset-4 hover:decoration-current">{formatInline(link[1])}</a>;
+    }
     if (part.startsWith("`") && part.endsWith("`")) {
       return (
         <code
@@ -169,6 +173,9 @@ function formatInline(text: string): ReactNode[] {
     }
     if (part.startsWith("**") && part.endsWith("**")) {
       return <strong key={`${part}-${index}`} className="font-bold text-[#071a2e]">{part.slice(2, -2)}</strong>;
+    }
+    if (part.startsWith("*") && part.endsWith("*")) {
+      return <em key={`${part}-${index}`}>{part.slice(1, -1)}</em>;
     }
     return part;
   });
@@ -264,13 +271,13 @@ function DatasetBlock({ block }: { block: Extract<ArticleBlock, { type: "dataset
           </tbody>
         </table>
       </div>
-      <div className="px-4 pb-5 sm:px-6 sm:pb-6">
-        <CodeBlock code={block.formula} language="Excel formula" />
-        <div className="-mt-2 flex items-start gap-2 text-xs leading-5 text-[#627086]">
+      {(block.formula || block.note) && <div className="px-4 pb-5 sm:px-6 sm:pb-6">
+        {block.formula && <CodeBlock code={block.formula} language="Excel formula" />}
+        {block.note && <div className="-mt-2 flex items-start gap-2 text-xs leading-5 text-[#627086]">
           <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#315f95]" />
           <span>{formatInline(block.note)}</span>
-        </div>
-      </div>
+        </div>}
+      </div>}
     </div>
   );
 }
@@ -311,14 +318,25 @@ function ArticleContentBlock({ block }: { block: ArticleBlock }) {
   if (block.type === "paragraph") {
     return <p>{formatInline(block.text)}</p>;
   }
+  if (block.type === "subheading") {
+    return <h3 className="mb-4 mt-9 font-display text-2xl font-semibold leading-tight text-[#071a2e]">{formatInline(block.text)}</h3>;
+  }
+  if (block.type === "quote") {
+    return <blockquote className="my-8 border-l-4 border-[#ff6048] bg-[#fffaf1] px-6 py-5 font-display text-xl italic leading-8">{formatInline(block.text)}</blockquote>;
+  }
+  if (block.type === "image") {
+    const image = <img src={block.src} alt={block.alt} loading="lazy" className={`h-auto w-full object-contain ${block.compact ? "max-w-[260px]" : "rounded-2xl border border-[#132841]/10"}`} />;
+    return <figure className="my-8">{block.href ? <a href={block.href} target="_blank" rel="noopener noreferrer" aria-label={block.alt}>{image}</a> : image}</figure>;
+  }
   if (block.type === "code") {
     return <CodeBlock code={block.code} language={block.language} />;
   }
   if (block.type === "list") {
+    const List = block.ordered ? "ol" : "ul";
     return (
-      <ul className="article-list">
+      <List className={`article-list ${block.ordered ? "list-decimal" : ""}`}>
         {block.items.map((item) => <li key={item}>{formatInline(item)}</li>)}
-      </ul>
+      </List>
     );
   }
   if (block.type === "dataset") {
@@ -882,6 +900,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-semibold text-[#627086]">
                 <span>By Dr. Vicki</span><span className="h-1 w-1 rounded-full bg-[#ff6048]" /><span>{article.date}</span><span className="h-1 w-1 rounded-full bg-[#ff6048]" /><span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> {article.readTime}</span>
               </div>
+              {article.source && <p className="mx-auto mt-5 max-w-2xl text-xs leading-6 text-[#627086]">Republished from <a href={article.source.href} target="_blank" rel="noopener noreferrer" className="font-bold text-[#315f95] underline underline-offset-4">{article.source.title}</a>. Original publication: {article.source.originalDate}.</p>}
             </div>
           </div>
         </header>

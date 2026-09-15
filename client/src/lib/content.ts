@@ -1,15 +1,20 @@
+import { skillspherePosts } from "./skillsphere-posts";
+
 export type ArticleBlock =
   | { type: "paragraph"; text: string }
   | { type: "code"; code: string; language?: string }
-  | { type: "list"; items: string[] }
+  | { type: "list"; items: string[]; ordered?: boolean }
   | { type: "tip"; text: string }
+  | { type: "subheading"; text: string }
+  | { type: "quote"; text: string }
+  | { type: "image"; src: string; alt: string; href?: string; compact?: boolean }
   | {
       type: "dataset";
       caption: string;
       headers: string[];
       rows: string[][];
-      formula: string;
-      note: string;
+      formula?: string;
+      note?: string;
     }
   | {
       type: "links";
@@ -35,6 +40,7 @@ export type Article = {
   accent: string;
   dek: string;
   quote?: string;
+  source?: { title: string; href: string; originalDate: string };
   sections: ArticleSection[];
 };
 
@@ -48,6 +54,7 @@ export const siteAssets = {
 };
 
 export const articles: Article[] = [
+  ...skillspherePosts,
   {
     slug: "the-real-cost-of-a-click-understanding-data-centers",
     title: "The Real Cost of a Click: Understanding Data Centers",
