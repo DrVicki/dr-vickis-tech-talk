@@ -900,7 +900,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-semibold text-[#627086]">
                 <span>By Dr. Vicki</span><span className="h-1 w-1 rounded-full bg-[#ff6048]" /><span>{article.date}</span><span className="h-1 w-1 rounded-full bg-[#ff6048]" /><span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> {article.readTime}</span>
               </div>
-              {article.source && <p className="mx-auto mt-5 max-w-2xl text-xs leading-6 text-[#627086]">Republished from <a href={article.source.href} target="_blank" rel="noopener noreferrer" className="font-bold text-[#315f95] underline underline-offset-4">{article.source.title}</a>. Original publication: {article.source.originalDate}.</p>}
+              {article.source && <p className="mx-auto mt-5 max-w-2xl text-xs leading-6 text-[#627086]">Originally published on <span className="font-semibold">{article.source.title}</span>. Original publication: {article.source.originalDate}.</p>}
             </div>
           </div>
         </header>
