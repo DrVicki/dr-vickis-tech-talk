@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, Clock, Layers3, Radar, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, Clock, Layers3, Mail, Radar, ShieldCheck, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { articles, siteAssets, topics } from "@/lib/content";
 import SiteHeader from "@/components/SiteHeader";
@@ -223,6 +223,29 @@ export default function Home() {
                   )}
                   <p className="mt-3 text-[11px] text-[#7f91a7]">No spam. No trend-chasing. Unsubscribe whenever you like.</p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="scroll-mt-24 bg-[#f8f3e8] pb-20 sm:pb-28">
+          <div className="container">
+            <div className="relative isolate overflow-hidden rounded-[32px] bg-[#c7dd2b] px-6 py-12 text-[#071a2e] sm:px-12 sm:py-16 lg:px-20">
+              <div className="absolute -left-16 -top-20 h-52 w-52 rounded-full border-[34px] border-[#ff6048]/70" />
+              <div className="absolute -bottom-20 right-[12%] h-48 w-48 rounded-full bg-[#315f95]/20" />
+              <div className="relative grid gap-10 lg:grid-cols-[1fr_auto] lg:items-center">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#315f95]">Questions welcome</p>
+                  <h2 className="mt-5 max-w-3xl font-display text-5xl font-medium leading-[0.94] tracking-[-0.045em] sm:text-6xl">Have a tech question? Send it my way.</h2>
+                  <p className="mt-6 max-w-2xl text-base leading-7 text-[#17344f]">Questions about a post, RSS, or a technology topic are welcome. Include a little context so we can start with the useful part of the conversation.</p>
+                  <p className="mt-3 text-sm font-bold text-[#071a2e]">vicki.bealman@devry.edu</p>
+                </div>
+                <a
+                  href="mailto:vicki.bealman@devry.edu?subject=Question%20from%20Dr.%20Vicki%27s%20Tech%20Talk"
+                  className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-[#071a2e] px-7 text-sm font-bold text-[#f8f3e8] shadow-[0_14px_34px_rgba(7,26,46,.2)] transition duration-200 hover:-translate-y-1 hover:bg-[#173d68] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/80"
+                >
+                  <Mail className="h-4 w-4" /> Email Dr. Vicki <ArrowUpRight className="h-4 w-4" />
+                </a>
               </div>
             </div>
           </div>

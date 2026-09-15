@@ -62,13 +62,19 @@ if (!guide.includes("main") || !guide.includes("/docs")) errors.push("Deployment
 if (!bundle.includes("formula-challenge")) errors.push("Production bundle is missing the public formula challenge");
 if (!bundle.includes("Copy formula") || !bundle.includes("Copy prompt")) errors.push("Production bundle is missing formula or prompt copy controls");
 if (!bundle.includes("api.github.com/repos/DrVicki/dr-vickis-tech-talk/issues")) errors.push("Production bundle is missing the public solution feed");
-if (!rssXml.includes('<?xml-stylesheet type="text/xsl" href="rss.xsl?v=beginner-guide"?>')) errors.push("RSS feed is missing its versioned browser stylesheet");
+if (!bundle.includes("Have a tech question? Send it my way.") || !bundle.includes("mailto:vicki.bealman@devry.edu")) errors.push("Production bundle is missing the public Contact Me section");
+if (!rssXml.includes('<?xml-stylesheet type="text/xsl" href="rss.xsl?v=reader-toolkit"?>')) errors.push("RSS feed is missing its versioned browser stylesheet");
 if (!rssXsl.includes("This is an RSS feed") || !rssXsl.includes('<xsl:for-each select="item">')) errors.push("RSS stylesheet is missing the feed explanation or article renderer");
 if (!rssXsl.includes("Subscribe in Feedly") || !rssXsl.includes("feedly.com/i/subscription/feed/")) errors.push("RSS stylesheet is missing the Feedly subscription button");
 if (!rssXsl.includes("Subscribe in Inoreader") || !rssXsl.includes("inoreader.com/?add_feed=")) errors.push("RSS stylesheet is missing the Inoreader subscription button");
 if (!rssXsl.includes("drvickitechtalk.org%2Frss.xml")) errors.push("RSS reader buttons are missing the canonical feed URL");
 if (!rssXsl.includes("RSS in three easy steps") || !rssXsl.includes("Choose a reader") || !rssXsl.includes("Subscribe once") || !rssXsl.includes("Read on your terms")) errors.push("RSS stylesheet is missing the three-step beginner guide");
 if (!rssXsl.includes("RSS is different from an email newsletter")) errors.push("RSS beginner guide is missing the newsletter distinction");
+if (!rssXsl.includes('id="copy-feed-url"') || !rssXsl.includes("navigator.clipboard.writeText") || !rssXsl.includes("legacyCopy")) errors.push("RSS stylesheet is missing the copy-feed interaction or fallback");
+if (!rssXsl.includes('role="status"') || !rssXsl.includes("Feed URL copied to your clipboard")) errors.push("RSS copy interaction is missing accessible success feedback");
+if (!rssXsl.includes("feedly.com/news-reader") || !rssXsl.includes("inoreader.com/") || !rssXsl.includes("netnewswire.com/")) errors.push("RSS guide is missing one or more official reader links");
+if (!rssXsl.includes("What is XML?") || !rssXsl.includes("What is an aggregator?") || !rssXsl.includes("Does “subscribe” mean I have to pay?")) errors.push("RSS page is missing the beginner terminology FAQ");
+if (!rssXsl.includes("Have a question for Dr. Vicki?") || !rssXsl.includes("mailto:vicki.bealman@devry.edu")) errors.push("RSS page is missing the reader contact panel");
 
 try {
   await access(path.join(docs, "__manus__"));

@@ -55,6 +55,7 @@ export default function SiteHeader() {
             <a href={sectionHref("latest")} className="nav-link">Latest</a>
             <a href={sectionHref("topics")} className="nav-link">Topics</a>
             <Link href="/about" className="nav-link">About</Link>
+            <a href={sectionHref("contact")} className="nav-link">Contact</a>
           </nav>
 
           <div className="flex items-center gap-2">
@@ -89,6 +90,7 @@ export default function SiteHeader() {
               <a href={sectionHref("latest")} onClick={closeMenus} className="mobile-nav-link">Latest</a>
               <a href={sectionHref("topics")} onClick={closeMenus} className="mobile-nav-link">Topics</a>
               <Link href="/about" onClick={closeMenus} className="mobile-nav-link">About Dr. Vicki</Link>
+              <a href={sectionHref("contact")} onClick={closeMenus} className="mobile-nav-link">Contact Dr. Vicki</a>
             </div>
           </nav>
         )}
